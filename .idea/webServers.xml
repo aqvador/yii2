@@ -51,7 +51,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="8119e5fd-1847-4580-819a-8ca0cb757eef" name="filtron" url="http://filtron.alltel24.ru">
-        <fileTransfer host="filtron.alltel24.ru" port="22" rootFolder="/etc/asterisk" accessType="SFTP" authAgent="true">
+        <fileTransfer host="filtron.alltel24.ru" port="22" accessType="SFTP" authAgent="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
@@ -59,7 +59,7 @@
         </fileTransfer>
       </webServer>
       <webServer id="7ddd74d8-fb7d-4cbb-b3fb-ed420fd25673" name="ceramic3d" url="http://ceramic3d.alltel24.ru">
-        <fileTransfer host="ceramic3d.alltel24.ru" port="22" accessType="SFTP" authAgent="true">
+        <fileTransfer host="ceramic3d.alltel24.ru" port="22" rootFolder="/root" accessType="SFTP" authAgent="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
