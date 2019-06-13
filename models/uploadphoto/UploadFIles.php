@@ -16,7 +16,17 @@ class Uploadfiles extends Model {
 
     public function rules() {
         return [
-            [['image'], 'image', 'extensions' => ['png', 'jpg'], 'maxWidth' => 5315, 'maxHeight' => 3543],
+            [
+                ['image'],
+                'image',
+                'extensions' => ['png', 'jpg'],
+                'minWidth' => 200,
+                'maxWidth' => 5315,
+                'minHeight' => 200,
+                'maxHeight' => 3543,
+                'maxSize' => 1024 * 1024 * 25,
+                'minSize' => 100,
+            ]
         ];
     }
 
@@ -45,15 +55,8 @@ class Uploadfiles extends Model {
         } else {
             return [
                 'status' => 'error',
-                'name' => $this->errors['image'][0]
+                'name' => $this->image->baseName . '.' . $this->image->extension.' <br> '. $this->errors['image'][0]
             ];
-            return ['status' => 'error', 'name' => $this->image->baseName . '.' . $this->image->extension];
         }
     }
-    /*
-                $companent = new SaveImageComponent;
-                $companent->mime();
-                $companent->accept();
-                return $companent->resize();
-    */
 }

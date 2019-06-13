@@ -12,13 +12,8 @@ class UploadphotoController extends BaseWebController {
 
 	public function actions(){
 		return [
-			'numorderstpl' => [
-				'class' => CreateOrderAction::class,
-				'tpl' => 'yes',
-			],
 			'numorders' => [
-				'class' => CreateOrderAction::class,
-				'tpl' => 'no',
+				'class' => CreateOrderAction::class
 			],
 			'uploadfiles' => [
 				'class' => UploadFIlesAction::class,

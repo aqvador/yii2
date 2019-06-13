@@ -19,7 +19,7 @@ h3#photoprint_order {
     user-select: none;
 }
 
-.toggle_mode>div {
+.toggle_mode > div {
     width: 50%;
     float: left;
     text-align: center;
@@ -44,11 +44,11 @@ h3#photoprint_order {
     background: rgba(0, 0, 0, 0.8);
 }
 
-.toggle_mode>div:hover {
+.toggle_mode > div:hover {
     cursor: pointer;
 }
 
-.toggle_mode>div.chosen {
+.toggle_mode > div.chosen {
     background: #01c478;
 }
 
@@ -354,9 +354,6 @@ img#upload_progress {
 
 .filelist .filename {
     width: 100%;
-    /* position: absolute;
-    left: 0;
-    bottom: 0; */
     background: #d7582d;
     color: #fff;
     padding: 0.5rem;
@@ -368,9 +365,23 @@ img#upload_progress {
     -ms-user-select: text;
     user-select: text;
     z-index: 9;
-    font-size: 14px;
+    font-size: 1.5rem;
     /* line-height: 1; */
+    white-space: nowrap; /* Запрещаем перенос строк */
+    text-overflow: ellipsis; /* Добавляем многоточие */
 }
+
+.calculator {
+    color: #02bbd7 !important;
+    padding-top: 1% !important;
+    font-size: 1rem;
+!important;
+}
+
+.calculator > .qtyminus {
+    border-right: 1px solid #fff !important;
+}
+
 
 .qty {
     border-radius: 0 !important;
@@ -483,7 +494,7 @@ div#photoprint_price {
     font-weight: bold;
 }
 
-div#photoprint_price>div {
+div#photoprint_price > div {
     width: 33.3333%;
     float: left;
     text-align: center;
@@ -498,7 +509,7 @@ div#photoprint_price div:last-child {
     text-align: left;
 }
 
-div#photoprint_price>div>input[type="button"] {
+div#photoprint_price > div > input[type="button"] {
     text-transform: uppercase;
     transition: all 0.2s;
     background: #015a36;
@@ -509,8 +520,8 @@ div#photoprint_price>div>input[type="button"] {
     padding: 4px 1rem;
 }
 
-div#photoprint_price>div>input[type="button"]:hover,
-div#photoprint_price>div>input[type="button"]:active {
+div#photoprint_price > div > input[type="button"]:hover,
+div#photoprint_price > div > input[type="button"]:active {
     background: #fff;
     color: #000;
 }
@@ -557,8 +568,8 @@ div.order_form input[type="button"] {
     padding: 1rem;
 }
 
-div.order_form>input[type="button"]:hover,
-div#photoprint_price>div>input[type="button"]:active {
+div.order_form > input[type="button"]:hover,
+div#photoprint_price > div > input[type="button"]:active {
     background: #55504d;
 }
 
@@ -587,11 +598,11 @@ div.order_form input[type="button"].cancel_order:hover {
     background-image: url(/modules/mod_iz_photoprint/assets/images/card.jpg);
 }
 
-#payment_type input:active+.payment_label {
+#payment_type input:active + .payment_label {
     opacity: .9;
 }
 
-#payment_type input:checked+.payment_label {
+#payment_type input:checked + .payment_label {
     -webkit-filter: none;
     -moz-filter: none;
     filter: none;
@@ -726,15 +737,15 @@ div#another_address:hover {
     transition: .4s;
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: #01c478;
 }
 
-input:focus+.slider {
+input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
 }
 
-input:checked+.slider:before {
+input:checked + .slider:before {
     -webkit-transform: translateX(36px);
     -ms-transform: translateX(36px);
     transform: translateX(36px);
@@ -833,14 +844,14 @@ div.modal.fade {
         top: 0;
     }
 
-    div#photoprint_price>div {
+    div#photoprint_price > div {
         float: none;
         width: 100%;
         padding: 0.2rem;
         text-align: center !important;
     }
 
-    div#photoprint_price>div:last-child {
+    div#photoprint_price > div:last-child {
         border: none;
     }
 
