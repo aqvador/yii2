@@ -11,7 +11,6 @@ class CreateOrderAction extends Action {
 	public $tpl;
 
 	public function run(){
-		sleep(1);
 		$model = new CreateOrder;
 		if($this->tpl == 'no') $model->Сreate();
 		if(\Yii::$app->request->isAjax){

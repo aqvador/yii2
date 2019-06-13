@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="5f35515f-bf05-45d5-910d-bae4ed62901c" name="yii2" url="http://filtron.alltel24.ru">
+        <fileTransfer host="filtron.alltel24.ru" port="22" rootFolder="/var/www/html/geekbrains.club/yii2" accessType="SFTP" authAgent="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

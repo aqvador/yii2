@@ -39,6 +39,7 @@ class Uploadfiles extends Model {
                 ]
             ];
         } else {
+            return $this->errors;
              return ['status' => 'error', 'name' => $this->image->baseName . '.' . $this->image->extension];
         }
     }
