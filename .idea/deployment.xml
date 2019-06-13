@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_CONTENT" serverName="yii2" autoUploadExternalChanges="true" notifyRemoteChanges="true">
+  <component name="PublishConfigData" autoUpload="Always" promptOnRemoteOverwrite="CHECK_CONTENT" serverName="yii2" uploadOnCheckin="5f35515f-bf05-45d5-910d-bae4ed62901c" autoUploadExternalChanges="true" notifyRemoteChanges="true">
     <serverData>
       <paths name="yii2">
         <serverdata>
@@ -17,6 +17,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="yii2" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
