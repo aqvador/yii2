@@ -31,7 +31,7 @@ AppAsset::register($this);
 <div class="wrap">
 
     <?php
-    NavBar::begin(['brandLabel' => $this->params['title'], 'brandUrl' => Yii::$app->homeUrl, 'options' => ['class' => 'navbar-inverse navbar-fixed-top',],]);
+    NavBar::begin(['brandLabel' => 'Brand', 'brandUrl' => Yii::$app->homeUrl, 'options' => ['class' => 'navbar-inverse navbar-fixed-top',],]);
     $nav['options'] = ['class' => 'navbar-nav navbar-right'];
     $nav['items'] = [['label' => 'Загрузка фото', 'url' => ['/uploadphoto/index']],['label' => 'Домой', 'url' => ['/site/index']], ['label' => 'О нас', 'url' => ['/site/about']], ['label' => 'Форма', 'url' => ['/activity/create']], Yii::$app->user->isGuest ? (['label' => 'Войти', 'url' => ['/site/login']]) : ('<li>' . Html::beginForm(['/site/logout'], 'post') . Html::submitButton('Выйти (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']) . Html::endForm() . '</li>')];
     #Если есть последняя посещенная страница упользователя, то добавим ее в конец меню
