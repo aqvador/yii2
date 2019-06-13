@@ -3,6 +3,7 @@
 namespace app\components;
 
 use Yii;
+use yii\base\Component;
 use yii\helpers\FileHelper;
 
 /**
@@ -59,16 +60,7 @@ class ImageResizeHelperComponent {
     private $_newImageUrl;
     private $_newImagePath;
 
-    /**
-     * @var array mime-типы изображений
-     */
-    private $_mimeTypesImages = ['image/gif', 'image/jpeg', 'image/png'];
 
-    /**
-     * ImageResizeHelper::init()->image('uploads/image.jpg')->quality(70)->crop(100, 100);
-     *
-     * @return self
-     */
     public static function init() {
         $class_name = __CLASS__;
         return new $class_name;
@@ -82,7 +74,7 @@ class ImageResizeHelperComponent {
         $this->_urlMinPhoto = Yii::$app->session->get('path') . '/min';
         $this->absUrlMinPhoto = '/img/orders/' . Yii::$app->session->get('folder') . '/min';
         $this->_quality = 85;
-        $this->_defaultImage = dirname(__FILE__) . '/imageresize/noimage.png';
+        $this->_defaultImage = dirname(__FILE__) . '/img/noimage.png';
         $this->_bg = ['r' => 255, 'g' => 255, 'b' => 255];
     }
 
@@ -100,7 +92,7 @@ class ImageResizeHelperComponent {
     }
 
     /**
-     * Задать абсолютный путь к папке resized
+     * Задать абсолютный путь к папке img
      *
      * @param string $path
      *
@@ -112,7 +104,7 @@ class ImageResizeHelperComponent {
     }
 
     /**
-     * Задать ссылку на папку resized
+     * Задать ссылку на папку img
      *
      * @param string $url
      *
@@ -242,60 +234,18 @@ class ImageResizeHelperComponent {
         //       return $this->_urlMinPhoto;
         //       return $this->absUrlMinPhoto;
         $orig_image_url = $this->_origImageFull;
-
+        $full_path = $this->_origImageFull;
         $width = (int)$width;
         $height = (int)$height;
-        // если не задааны размеры - используем _defaultImage
-        if ($width <= 0 || $height <= 0) {
-            $full_path = $this->_defaultImage;
-        } else {
-            // приведем путь к нужному виду
-            //            $this->_clearImagePath();
-
-            // абсолютный путь к картинке
-            //            $full_path = $this->_getFullPath();
-            $full_path = $this->_origImageFull;
-            // если картинки нет - используем _defaultImage
-            if (!is_file($full_path))
-                $full_path = $this->_defaultImage;
-        }
-
-
-        // если даже _defaultImage не найден, вернем ничего
-        if (!is_file($full_path))
-            return 'Нет никакого изображения';
-
-        // получим mime-тип
         $mimeType = FileHelper::getMimeType($full_path);
-        if ($mimeType === null) {
-            return 'не определен mime';
-        }
-
-        // не тот mime-тип
-        if (!in_array($mimeType, $this->_mimeTypesImages)) {
-            return 'mime не тот';
-        }
 
         // размеры исходного изображения
         $sizes = getimagesize($full_path);
-        if (!$sizes) {
-            return '';
-        }
         $w = $sizes[0];
         $h = $sizes[1];
-        if ($w == 0 || $h == 0) {
-            return 'размеры исходного фото равны нулю';
-        }
-
-        // проверим размеры исходной картинки
-        if (!$force_resize) {
-            if (($fitwh == 'w' && $width == $w) || ($fitwh == 'h' && $height == $h) || ($fitwh != 'w' && $fitwh != 'h' && $width == $w && $height == $h)) {
-                return $orig_image_url;
-            }
-        }
 
         // имя и путь к новой картинке (все в JPEG)
-        $new_filename = md5($full_path . filesize($full_path)) . '.jpg';
+        $new_filename = time()*rand(99999,100000000)+rand(1,1000) . '.jpg';
         $new_folder_p1 = $width . 'x' . $height;
         if (!$crop && $fitwh == 'w')
             $new_folder_p1 = $width;
@@ -310,24 +260,10 @@ class ImageResizeHelperComponent {
             $new_folder_p1 .= '-fitw';
         if (!$crop && $fitwh == 'h')
             $new_folder_p1 .= '-fith';
-        if (!$crop && $fitwh == 'p')
-            $new_folder_p1 .= '-pl';
-        $new_folder_p2 = substr($new_filename, 0, 2);
-        $new_folder_url = $this->absUrlMinPhoto; // . '/' . $new_folder_p1 . '/' . $new_folder_p2;
-        $new_folder_path = $this->_urlMinPhoto; // . DIRECTORY_SEPARATOR . $new_folder_p1 . DIRECTORY_SEPARATOR . $new_folder_p2;
-
-        // создадим папку
-        if (!is_dir($new_folder_path))
-            if (!mkdir($new_folder_path, 0755, true))
-                return 'не найден путь к новой картинке ' . $new_folder_path;
 
         // новая ссылка и абсолютный путь
-        $this->_newImageUrl = $new_folder_url . '/' . $new_filename;
-        $this->_newImagePath = $new_folder_path . DIRECTORY_SEPARATOR . $new_filename;
-
-        // если файл уже есть
-        if (is_file($this->_newImagePath))
-            return $this->_newImageUrl;
+        $this->_newImageUrl = $this->absUrlMinPhoto . '/' . $new_filename;
+        $this->_newImagePath = $this->_urlMinPhoto . DIRECTORY_SEPARATOR . $new_filename;
 
         // создаем ресурс из исходной картинки
         $this->_im = false;
@@ -398,7 +334,7 @@ class ImageResizeHelperComponent {
                 return $this->_newImageUrl;
         }
 
-        return full_path;
+        return $full_path;
     }
 
     /**

@@ -7,7 +7,7 @@
         </div>
         <div class="filename" title="{{title}}">{{title}}
         </div>
-        <div style="color: #02bbd7; padding-top: 1%; font-size: 1rem;">
+        <div>
             <input type="button" value="-" class="qtyminus" field="{{size}}_{{count}}"
             ><input class="qty success" type="text" name="{{size}}_{{count}}" value="1 шт." disabled=""
             ><input type="button" value="+" class="qtyplus red" field="{{size}}_{{count}}">
@@ -17,9 +17,9 @@
                 <option value="glossy" selected="">Глянцевая</option>
                 <option value="mate">Матовая</option>
             </select></div>
-        <span style="display: block;" class="status success fa fa-check"></span></div>
-    <div class="progress" style="display: none;">
+        <span style="" class="status success fa fa-check"></span></div>
+    <div class="progress"">
         <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
-             aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+             aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
     </div>
 </div>
