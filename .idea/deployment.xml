@@ -5,14 +5,14 @@
       <paths name="yii2">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-            <mapping local="" />
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/vendor" />
             <excludedPath local="true" path="$PROJECT_DIR$/web/img/orders" />
             <excludedPath path="/vendor" />
             <excludedPath path="/web/img/orders" />
+            <excludedPath local="true" path="$PROJECT_DIR$/config/db_local.php" />
           </excludedPaths>
         </serverdata>
       </paths>

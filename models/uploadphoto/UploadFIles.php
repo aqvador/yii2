@@ -24,23 +24,30 @@ class Uploadfiles extends Model {
 
 
         if ($this->validate()) {
-            if(!$this->folder = \Yii::$app->session->get('folder')) return ['status', 'error', 'Нет каталога'];
-            if(!$this->path = \Yii::$app->session->get('path')) return ['status' => 'error', 'Нет пути к каталогу'];
+            if (!$this->folder = \Yii::$app->session->get('folder'))
+                return ['status', 'error', 'Нет каталога'];
+            if (!$this->path = \Yii::$app->session->get('path'))
+                return ['status' => 'error', 'Нет пути к каталогу'];
             //        $this->file = $_FILES['file'];
             $uploadfilemax = $this->path . '/max/';
             $uploadfilemin = $this->path . '/min/';
             $maxFile = $uploadfilemax . $this->image->baseName . '.' . $this->image->extension;
             $this->image->saveAs($maxFile);
             $minFile = ImageResizeHelperComponent::init()->image($maxFile, $this->image->baseName)->quality(20)->fit(700, 800);
-            return [
-                'status' => [
-                    'min' => $minFile,
-                    'max' => '/img/orders/' . $this->folder . '/max/' . $this->image->baseName . '.' . $this->image->extension
-                ]
-            ];
+            if ($minFile) {
+                return [
+                    'status' => [
+                        'min' => $minFile,
+                        'max' => '/img/orders/' . $this->folder . '/max/' . $this->image->baseName . '.' . $this->image->extension
+                    ]
+                ];
+            } else  return ['status' => 'error', 'name' => $this->image->baseName . '.' . $this->image->extension];
         } else {
-            return $this->errors;
-             return ['status' => 'error', 'name' => $this->image->baseName . '.' . $this->image->extension];
+            return [
+                'status' => 'error',
+                'name' => $this->errors['image'][0]
+            ];
+            return ['status' => 'error', 'name' => $this->image->baseName . '.' . $this->image->extension];
         }
     }
     /*
