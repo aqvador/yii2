@@ -4,7 +4,6 @@ namespace app\models\uploadphoto;
 
 use app\components\ImageResizeHelperComponent;
 use yii\base\Model;
-use yii\helpers\Html;
 
 class Uploadfiles extends Model {
     /**
@@ -25,7 +24,7 @@ class Uploadfiles extends Model {
                 'minHeight' => 200,
                 'maxHeight' => 3543,
                 'maxSize' => 1024 * 1024 * 25,
-                'minSize' => 100,
+                'minSize' => 102400
             ]
         ];
     }
@@ -38,7 +37,6 @@ class Uploadfiles extends Model {
                 return ['status', 'error', 'Нет каталога'];
             if (!$this->path = \Yii::$app->session->get('path'))
                 return ['status' => 'error', 'Нет пути к каталогу'];
-            //        $this->file = $_FILES['file'];
             $uploadfilemax = $this->path . '/max/';
             $uploadfilemin = $this->path . '/min/';
             $maxFile = $uploadfilemax . $this->image->baseName . '.' . $this->image->extension;
@@ -55,7 +53,7 @@ class Uploadfiles extends Model {
         } else {
             return [
                 'status' => 'error',
-                'name' => $this->image->baseName . '.' . $this->image->extension.' <br> '. $this->errors['image'][0]
+                'name' => $this->image->baseName . '.' . $this->image->extension . ' <br> ' . $this->errors['image'][0]
             ];
         }
     }

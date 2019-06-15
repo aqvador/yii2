@@ -18,7 +18,7 @@ class CreateOrderAction extends Action {
             return [
                 'orderNumber' => $model->folder,
                 'secureKey' => $model->secureKey,
-                'tpl' => $this->controller->renderPartial('upload', ['model' => $model]),
+//                'tpl' => $this->controller->renderPartial('upload', ['model' => $model]),
                 'block' => $this->controller->renderPartial('addFile')
             ];
         }

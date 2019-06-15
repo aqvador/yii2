@@ -13,6 +13,8 @@
             <excludedPath path="/vendor" />
             <excludedPath path="/web/img/orders" />
             <excludedPath local="true" path="$PROJECT_DIR$/config/db_local.php" />
+            <excludedPath path="/runtime" />
+            <excludedPath local="true" path="$PROJECT_DIR$/runtime" />
           </excludedPaths>
         </serverdata>
       </paths>

@@ -1,16 +1,3 @@
-stock_price = {
-    "9x13": 17,
-    "10x15": 15,
-    "11x15": 30,
-    "13x18": 32,
-    "15x15": 35,
-    "15x20": 35,
-    "20x20": 60,
-    "20x30": 70,
-    "20x40": 80,
-    "21x30": 70,
-    "30x42": 110
-};
 order = "";
 // promoName = "";
 // discount = 0;
@@ -56,6 +43,8 @@ function leaveOrder() {
 
 
 function toggle_mode(model) {
+    model.prevantDefault;
+    console.log(model);
     if (!jQuery(model).hasClass("chosen")) {
         jQuery(".toggle_mode > div").removeClass("chosen");
         jQuery(model).addClass("chosen");
@@ -109,9 +98,7 @@ function showPhotoprintForm() {
             });
             jQuery("#photoprint_form > #sizes a").each(function () {
                 i = jQuery(this).text();
-                tpl = view.replace(/{{size}}/g, i);
-                tpl = tpl.replace(/{{price}}/g, stock_price[i]);
-                initUploader(i, order, tpl);
+                initUploader(i, order);
 
             });
 
@@ -138,133 +125,129 @@ function removeImage(var7) {
 
 function add_file(cnt, file, size) {
 
-  productBlock = window.block.replace(/{{size}}/g, size).replace(/{{count}}/g, cnt).replace(/{{title}}/g, file.name);
+    productBlock = window.block.replace(/{{size}}/g, size).replace(/{{count}}/g, cnt).replace(/{{title}}/g, file.name);
     jQuery("#fileList-" + size).prepend(productBlock);
 }
 
-function update_file_status(cnt, var9, var10, size) {
-    var _0xbc7cx1c = jQuery('#uploadFile' + size + '_' + cnt).find('span.status');
-    if (var9 !== "uploading") {
-        jQuery('#uploadFile' + size + '_' + cnt + ' .progress').css('display', 'none');
-        _0xbc7cx1c.addClass(var9).addClass(var10).css('display', 'block');
-        _0xbc7cx1c.html('')
+function update_file_status(cnt, status, var10, size) {
+    var _0xbc7cx1c = jQuery("#uploadFile" + size + "_" + cnt).find("span.status");
+    if (status !== "uploading") {
+        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("display", "none");
+        _0xbc7cx1c.addClass(status).addClass(var10).css("display", "block");
+        _0xbc7cx1c.html("");
     }
-    ;
-    if (var9 == 'error') {
-        jQuery('div#uploadFile' + size + '_' + cnt).find('div.progress').css('background', '#b52e28');
-        jQuery('div#uploadFile' + size + '_' + cnt).find('input.qty').addClass(var9);
-        jQuery('div#uploadFile' + size + '_' + cnt + ' div.info div.preview_image img').remove();
-        jQuery('div#uploadFile' + size + '_' + cnt + ' div.info div.preview_image').append('<img src="/img/uploadphoto/error.png" />')
+    if (status === "error") {
+        select = jQuery("div#uploadFile" + size + "_" + cnt);
+        select.find("div.progress").css("background", "#b52e28");
+        select.find("input.qty").addClass(var9);
+        jQuery("div#uploadFile" + size + "_" + cnt + " div.info div.preview_image img").remove();
+        jQuery("div#uploadFile" + size + "_" + cnt + " div.info div.preview_image").append('<img src="/img/uploadphoto/error.png" />');
     }
 }
 
-function initUploader(size, order, tpl) {
-    var photo_price = '';
-    size = size;
+function initUploader(size) {
     photo_price = stock_price[size];
-    jQuery('#upload_block').prepend(tpl)
-    jQuery('#drag-and-drop-zone-' + size).dmUploader({
-        // url: '/modules/mod_iz_photoprint/upload.php?order=' + order + '&secureKey=' + secureKey,
-        url: '/uploadphoto/uploadfiles/',
-        dataType: 'json',
-        extFilter: 'jpg;jpeg;png',
+    jQuery("#drag-and-drop-zone-" + size).dmUploader({
+        url: "/uploadphoto/uploadfiles/",
+        dataType: "json",
+        extFilter: "jpg;jpeg;png",
         onInit: function () {
         },
         onBeforeUpload: function (cnt) {
-            update_file_status(cnt, 'uploading', '', size);
-            jQuery('#drag-and-drop-zone-' + size + ' img#upload_progress').css('display', 'inline-block')
-            jQuery('#uploadFile' + size + '_' + cnt).show('slow');
+            update_file_status(cnt, "uploading", "", size);
+            jQuery("#drag-and-drop-zone-" + size + " img#upload_progress").css("display", "inline-block")
+            jQuery("#uploadFile" + size + "_" + cnt).show("slow");
         },
         onNewFile: function (cnt, title) {
-            add_file(cnt, title, size)
+            add_file(cnt, title, size);
         },
         onComplete: function () {
-            jQuery('#drag-and-drop-zone-' + size + ' img#upload_progress').css('display', 'none')
+            jQuery("#drag-and-drop-zone-" + size + " img#upload_progress").css("display", "none");
         },
-        onUploadProgress: function (cnt, _0xbc7cx22) {
-            var proc = _0xbc7cx22 + '%';
-            $('#uploadFile' + size + '_' + cnt + ' .progress-bar').css('width', proc);
+        onUploadProgress: function (cnt, proc) {
+            proc = proc + "%";
+            $("#uploadFile" + size + "_" + cnt + " .progress-bar").css("width", proc);
         },
         onUploadSuccess: function (cnt, answer) {
-            if (answer.status == 'error') {
+            if (answer.status === "error") {
                 jQuery.fancybox.open({
                     src: '<p style="text-align: center;">Что-то не так с Вашим изображением.<br><b>' + answer.name + '</b><br> Попробуйте загрузить другое</p>',
-                    type: 'html'
+                    type: "html"
                 }, {
-                    animationEffect: "zoom-in-out",
+                    animationEffect: "zoom-in-out"
                 });
-                removeImage('uploadFile' + size + '_' + cnt)
+                removeImage("uploadFile" + size + "_" + cnt);
             } else {
-                update_file_status(cnt, 'success', 'fa fa-check', size);
-                jQuery('div#uploadFile' + size + '_' + cnt).find('input.qty').addClass('success');
-                jQuery('#uploadFile' + size + '_' + cnt).find('img').eq(0).attr('src', answer.status.min).css('cursor', 'zoom-in').on('click', function () {
+                update_file_status(cnt, "success", "fa fa-check", size);
+                jQuery("div#uploadFile" + size + "_" + cnt).find("input.qty").addClass("success");
+                jQuery("#uploadFile" + size + "_" + cnt).find("img").eq(0).attr("src", answer.status.min).css("cursor", "zoom-in").on("click", function () {
                     jQuery.fancybox.open({
                         src: answer.status.max,
-                        caption: answer.status.max.split('/').pop(),
+                        caption: answer.status.max.split("/").pop(),
                         protect: true
                     }, {
                         animationEffect: "zoom-in-out"
                     });
-                })
-                calcPrice()
+                });
+                calcPrice();
             }
         },
-        onUploadError: function (cnt, var17) {
-            update_file_status(cnt, 'error', 'fa fa-close', size)
+        onUploadError: function (cnt) {
+            update_file_status(cnt, "error", "fa fa-close", size);
         },
         onFileTypeError: function (var7) {
             jQuery.fancybox.open({
                 src: '<p style="text-align: center;">Файл <b>' + var7.name + '</b> должен быть изображением!</p>',
-                type: 'html'
+                type: "html"
             }, {
-                animationEffect: "zoom-in-out",
+                animationEffect: "zoom-in-out"
             });
         },
         onFileSizeError: function (var7) {
             jQuery.fancybox.open({
                 src: '<p style="text-align: center;">Файл <b>' + var7.name + '</b> не может быть загружен: <br>Превышен допустимый размер файла!</p>',
-                type: 'html'
+                type: "html"
             }, {
-                animationEffect: "zoom-in-out",
+                animationEffect: "zoom-in-out"
             });
         },
         onFileExtError: function (var7) {
             jQuery.fancybox.open({
                 src: '<p style="text-align: center;">Файл <b>' + var7.name + '</b> <br>Недопустимое расширение файла</p>',
-                type: 'html'
+                type: "html"
             }, {
-                animationEffect: "zoom-in-out",
+                animationEffect: "zoom-in-out"
             });
         },
         onFallbackMode: function (var17) {
-            alert('Browser not supported(do something else here!): ' + var17)
+            alert("Browser not supported(do something else here!): " + var17);
         }
-    })
+    });
 }
 
 function calcPrice() {
-    var var18 = jQuery('div#photoprint_price');
-    var var19 = '';
+    var var18 = jQuery("div#photoprint_price");
+    var var19 = "";
     // Общее кол-во фото.
     var total_photo = 0;
-    jQuery('.file input.qty').each(function () {
-        if (!jQuery(this).hasClass('error') && jQuery(this).hasClass('success')) {
+    jQuery(".file input.qty").each(function () {
+        if (!jQuery(this).hasClass("error") && jQuery(this).hasClass("success")) {
             total_photo += parseInt(jQuery(this).val())
         }
-    })
+    });
 
     // Определение на странице всех доступных списков фотограций и подсчет их стоимости
     var count = [];
-    jQuery('.filelist').each(function () {
-        id = jQuery(this).attr('id');
-        var index = id.split('-').pop();
+    jQuery(".filelist").each(function () {
+        id = jQuery(this).attr("id");
+        var index = id.split("-").pop();
         count[index] = 0;
-        jQuery('div#' + id + ' .file input.qty').each(function () {
-            if (!jQuery(this).hasClass('error') && jQuery(this).hasClass('success')) {
-                count[index] += parseInt(jQuery(this).val())
+        jQuery("div#" + id + " .file input.qty").each(function () {
+            if (!jQuery(this).hasClass("error") && jQuery(this).hasClass("success")) {
+                count[index] += parseInt(jQuery(this).val());
             }
         });
-        jQuery('a:contains(' + index + ')').next().html(count[index]);
+        jQuery("a:contains(" + index + ")").next().html(count[index]);
     });
 
     //Считаем цену
@@ -273,27 +256,14 @@ function calcPrice() {
         price += count[key] * stock_price[key];
     }
 
-    if (window.promoName == 'law_and_order') {
+    if (window.promoName === "law_and_order") {
         window.realPrice = price;
-        var var38 = 0;
         if (window.realPrice > 0) {
-            var18.show('slow')
+            var18.show("slow");
         }
-        ;
-        if ((window.promoTotal - price) >= 0) {
-            price = 0;
-            jQuery('textarea#order_comment').next().css('height', 0).css('overflow', 'hidden');
-            jQuery('div#payment_type').css('height', 0).css('overflow', 'hidden').next().css('display', 'none')
-        } else {
-            jQuery('#sbercard').click();
-            jQuery('textarea#order_comment').next().css('height', 'auto').css('overflow', 'hidden');
-            jQuery('div#payment_type').css('height', 'auto').css('overflow', 'hidden').next().css('display', 'block');
-            price = Math.abs(window.promoTotal - price)
-        }
-        ;
     }
-    if (var18.css('display') == 'none' && price != 0 && total_photo != 0) {
-        var18.show('slow')
+    if (var18.css("display") === "none" && price !== 0 && total_photo !== 0) {
+        var18.show("slow");
     }
     ;
     jQuery('.size_cnt').each(function () {
@@ -350,31 +320,8 @@ function hideOrderForm() {
     jQuery('div.order_form').slideUp('slow');
     jQuery('div#map').html('')
 }
-
-function add_shablon(a) {
-    console.log(a);
-}
-
-function emailCheck(email) {
-    var mask = /^([a-z0-9_\-]+\.)*[a-z0-9_\-]+@([a-z0-9][a-z0-9\-]*[a-z0-9]\.)+[a-z]{2,6}$/i;
-    if (mask.test(email.trim())) {
-        return true
-    }
-    ;
-    return false
-}
-
 function confirmOrder() {
-    if (jQuery('div.order_form input#form_name').val() == '' || jQuery('div.order_form input#form_phone').val() == '') {
-        alert('Пожалуйста заполние все необходимые поля формы!');
-        return false
-    }
-    ;
-    if (!emailCheck(jQuery('input#form_email').val().trim())) {
-        alert('Пожалуйста введите корректный Email адрес!');
-        return false
-    }
-    ;
+
     jQuery('div.order_form').slideUp('slow');
     jQuery('h3#photoprint_order').slideUp('slow');
     jQuery('#loading').show('slow');
@@ -421,7 +368,8 @@ function confirmOrder() {
 
 jQuery(document).ready(function () {
     //Переключение размеров фото.
-    jQuery('div#sizes a').click(function () {
+    jQuery('div#sizes a').click(function (e) {
+        e.preventDefault();
         if (!jQuery(this).hasClass('chosen')) {
             jQuery('div#sizes a').removeClass('chosen');
             jQuery(this).addClass('chosen');
@@ -457,13 +405,3 @@ jQuery(document).ready(function () {
         calcPrice()
     });
 });
-
-
-// window.onbeforeunload = function () {
-//     alert('Покеда');
-//     jQuery.post('/modules/mod_iz_photoprint/upload.php?stopPropagation', {
-//         orderNum: window.order,
-//         secureKey: window.secureKey,
-//         onbeforeunload: 2
-//     });
-// }
