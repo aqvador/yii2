@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Компонент для запросов в Базе данных
+ * Используется для контроллера UploadphotoController
+ */
+
 
 namespace app\components;
 

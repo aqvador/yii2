@@ -1,12 +1,11 @@
 <?php
 /**
- * @var $model \app\models\uploadphoto\CreateOrder
+ * @var $model \app\models\uploadphoto\StartUploadPhoto
  * @var $size \app\controllers\UploadphotoController
  */
 
 use \yii\bootstrap\ActiveForm;
 use \yii\bootstrap\Html;
-
 
 
 ?>
@@ -75,13 +74,13 @@ use \yii\bootstrap\Html;
 
 <?php
 $this->registerJsVar('stock_price', $param);
-
 $js = <<<JS
+
  $('form').on('beforeSubmit', function(){
-    jQuery('div.order_form').slideUp('slow');
+   jQuery('div.order_form').slideUp('slow');
     jQuery('h3#photoprint_order').slideUp('slow');
     jQuery('#loading').show('slow');
-    var order = [];
+    var order = {};
     jQuery('div.uploader div.file').each(function () {
         if (!jQuery(this).find('.status').hasClass('error')) {
             order.push({
@@ -94,18 +93,21 @@ $js = <<<JS
             })
         }
     });
-    jQuery.post('/uploadphoto/orderphoto', {
-        orderNum: jQuery('span#order_num').text(),
-        secureKey: window.secureKey,
-        total_price: jQuery('span#order_price span').html(),
-        name: jQuery('div.order_form input#form_name').val(),
-        email: jQuery('input#form_email').val().trim(),
-        phone: jQuery('div.order_form input#form_phone').val(),
-        order_comment: jQuery('div.order_form textarea#order_comment').val(),
-        count: jQuery('span#files_count').text(),
-        data: JSON.stringify(order)
-    }).done(function (data) {
-        data = JSON.parse(data);
+    form = $("#OrderFormPhoto :input");
+ 	data = {};
+    form.each(function() {
+        data[this.name]  = $(this).val();
+    });
+    data["orderNum"] = jQuery('span#order_num').text();
+    data["total_price"] = jQuery('span#order_price span').html();
+    data["count"] = jQuery('span#files_count').text();
+    data["OrderPhoto[order]"] = order;
+                
+    console.log(data);
+    jQuery.post('/uploadphoto/orderphoto', data)
+    .done(function (data) {
+        // data = JSON.parse(data);
+        console.log(data);
         orderConfirmed = 1;
         setTimeout(function () {
             switch (data.status) {
@@ -120,6 +122,7 @@ $js = <<<JS
             }
         }, 2000)
     })
+ return false;
  });
 JS;
 ?>

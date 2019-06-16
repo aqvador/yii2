@@ -1,10 +1,17 @@
 <?php
 
+/**
+ * Модель StartUploadPhoto
+ * Стартует создание проекта по загрузке фото
+ * Именно этот класс, создает изначально папки проекта
+ * устанавливате нужные значения для сессии
+ */
+
 namespace app\models\uploadphoto;
 
 use yii\base\Model;
 
-Class CreateOrder extends Model {
+Class StartUploadPhoto extends Model {
 
     public $folder;
     public $folders = ['min', 'max', 'order'];

@@ -15,7 +15,8 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle {
+class AppAsset extends AssetBundle
+{
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
@@ -27,7 +28,7 @@ class AppAsset extends AssetBundle {
     public $js = [
         'js/mod_iz_photoprint.js',
         'js/dmuploader.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
+		'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

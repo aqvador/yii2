@@ -105,10 +105,12 @@ function showPhotoprintForm() {
             window.onbeforeunload = leaveOrder;
             jQuery(".uploader").each(function () {
                 var $this = jQuery(this);
-                $this.find(".allmate").eq(0).on("click", function () {
+                $this.find(".allmate").eq(0).on("click", function (e) {
+                    e.preventDefault();
                     $this.find(".file .paper").val("mate");
                 });
-                $this.find(".allglossy").eq(0).on("click", function () {
+                $this.find(".allglossy").eq(0).on("click", function (e) {
+                    e.preventDefault();
                     $this.find(".file .paper").val("glossy");
                 });
             });
@@ -132,7 +134,7 @@ function add_file(cnt, file, size) {
 function update_file_status(cnt, status, var10, size) {
     var _0xbc7cx1c = jQuery("#uploadFile" + size + "_" + cnt).find("span.status");
     if (status !== "uploading") {
-        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("display", "none");
+        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("opacity", "0");
         _0xbc7cx1c.addClass(status).addClass(var10).css("display", "block");
         _0xbc7cx1c.html("");
     }
@@ -155,8 +157,8 @@ function initUploader(size) {
         },
         onBeforeUpload: function (cnt) {
             update_file_status(cnt, "uploading", "", size);
-            jQuery("#drag-and-drop-zone-" + size + " img#upload_progress").css("display", "inline-block")
-            jQuery("#uploadFile" + size + "_" + cnt).show("slow");
+            jQuery("#drag-and-drop-zone-" + size + " img#upload_progress").css("display", "inline-block");
+            jQuery("#uploadFile" + size + "_" + cnt).slideDown("slow");
         },
         onNewFile: function (cnt, title) {
             add_file(cnt, title, size);
@@ -171,7 +173,7 @@ function initUploader(size) {
         onUploadSuccess: function (cnt, answer) {
             if (answer.status === "error") {
                 jQuery.fancybox.open({
-                    src: '<p style="text-align: center;">Что-то не так с Вашим изображением.<br><b>' + answer.name + '</b><br> Попробуйте загрузить другое</p>',
+                    src: "<p style=\"text-align: center;\">"+answer.textError+"</p>",
                     type: "html"
                 }, {
                     animationEffect: "zoom-in-out"
@@ -180,15 +182,19 @@ function initUploader(size) {
             } else {
                 update_file_status(cnt, "success", "fa fa-check", size);
                 jQuery("div#uploadFile" + size + "_" + cnt).find("input.qty").addClass("success");
-                jQuery("#uploadFile" + size + "_" + cnt).find("img").eq(0).attr("src", answer.status.min).css("cursor", "zoom-in").on("click", function () {
-                    jQuery.fancybox.open({
-                        src: answer.status.max,
-                        caption: answer.status.max.split("/").pop(),
-                        protect: true
-                    }, {
-                        animationEffect: "zoom-in-out"
+                jQuery("#uploadFile" + size + "_" + cnt)
+                    .find("img").eq(0)
+                    .attr("src", answer.status.min)
+                    .css("cursor", "zoom-in")
+                    .on("click", function () {
+                        jQuery.fancybox.open({
+                            src: answer.status.max,
+                            caption: answer.status.max.split("/").pop(),
+                            protect: true
+                        }, {
+                            animationEffect: "zoom-in-out"
+                        });
                     });
-                });
                 calcPrice();
             }
         },
@@ -287,10 +293,10 @@ function calcPrice() {
         });
         if (var39 < 1) {
             jQuery(this).find('.uploader_counter').html('');
-            jQuery(this).find('.mass_control').hide('slow')
+            jQuery(this).find('.mass_control').hide('slow');
         } else {
             jQuery(this).find('.uploader_counter').html('Успешно принято фотографий: ' + var40 + ' из ' + var39);
-            jQuery(this).find('.mass_control').show('slow')
+            jQuery(this).find('.mass_control').show('slow');
         }
     });
     if (price == 0 && total_photo == 0) {
@@ -320,8 +326,8 @@ function hideOrderForm() {
     jQuery('div.order_form').slideUp('slow');
     jQuery('div#map').html('')
 }
-function confirmOrder() {
 
+jQuery('form').on('beforeSubmit', function () {
     jQuery('div.order_form').slideUp('slow');
     jQuery('h3#photoprint_order').slideUp('slow');
     jQuery('#loading').show('slow');
@@ -338,33 +344,37 @@ function confirmOrder() {
             })
         }
     });
-    jQuery.post('/modules/mod_iz_photoprint/upload.php?confirm', {
-        orderNum: jQuery('span#order_num').text(),
-        secureKey: window.secureKey,
-        total_price: jQuery('span#order_price span').html(),
-        name: jQuery('div.order_form input#form_name').val(),
-        email: jQuery('input#form_email').val().trim(),
-        phone: jQuery('div.order_form input#form_phone').val(),
-        order_comment: jQuery('div.order_form textarea#order_comment').val(),
-        count: jQuery('span#files_count').text(),
-        data: JSON.stringify(order)
-    }).done(function (data) {
-        data = JSON.parse(data);
-        orderConfirmed = 1;
-        setTimeout(function () {
-            switch (data.status) {
-                case 'order_not_exists':
-                    jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Истекло время подтверждения заказа. В связи с этим он был удалён. Пожалуйста, сформируйте новый заказ.</h2>');
-                    break;
-                case 'ok':
-                    jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
-                    break;
-                default:
-                    jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')
-            }
-        }, 2000)
-    })
-}
+    form = $("#OrderFormPhoto :input");
+    data = {};
+    form.each(function () {
+        data[this.name] = $(this).val();
+    });
+    data["orderNum"] = jQuery('span#order_num').text();
+    data["totalPrice"] = jQuery('span#order_price span').html();
+    data["count"] = jQuery('span#files_count').text();
+    data["OrderPhoto[order]"] = JSON.stringify(order);
+
+    console.log(data);
+    jQuery.post('/uploadphoto/orderphoto', data)
+        .done(function (data) {
+            // data = JSON.parse(data);
+            console.log(data);
+            orderConfirmed = 1;
+            setTimeout(function () {
+                switch (data.status) {
+                    case 'order_not_exists':
+                        jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Истекло время подтверждения заказа. В связи с этим он был удалён. Пожалуйста, сформируйте новый заказ.</h2>');
+                        break;
+                    case 'ok':
+                        jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
+                        break;
+                    default:
+                        jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')
+                }
+            }, 2000)
+        });
+    return false;
+});
 
 jQuery(document).ready(function () {
     //Переключение размеров фото.
@@ -388,7 +398,6 @@ jQuery(document).ready(function () {
         } else {
             jQuery('input[name=' + fieldName + ']').val(1 + ' шт.')
         }
-        ;
         calcPrice()
     });
     jQuery('#upload_block').on('click', '.qtyminus', function (f) {
@@ -401,7 +410,6 @@ jQuery(document).ready(function () {
         } else {
             jQuery('input[name=' + fieldName + ']').val(1 + ' шт.')
         }
-        ;
         calcPrice()
     });
 });
