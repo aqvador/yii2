@@ -14,6 +14,7 @@
 namespace app\controllers;
 
 use app\base\BaseWebController;
+use app\components\IntegrationRetailCRM;
 use app\components\OrderPhotoComponent;
 use app\controllers\uploadphoto\StartUploadPhotoAction;
 use app\controllers\uploadphoto\OrderPhotoAction;
@@ -43,5 +44,13 @@ class UploadphotoController extends BaseWebController {
         $size = $comp->getSizePhoto();
 
         return $this->render('index', compact('model', 'size'));
+    }
+
+    public function actionIndex2(){
+//        return '2';
+        $crm = \Yii::createObject(IntegrationRetailCRM::class);
+        $a =  print_r($crm->CreateOrderCRM(),1);
+        echo 'Controller'."\n";
+        echo $a;
     }
 }

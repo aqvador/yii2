@@ -9,6 +9,7 @@
 namespace app\controllers\uploadphoto;
 
 
+use app\components\IntegrationRetailCRM;
 use app\models\uploadphoto\OrderPhoto;
 use yii\base\Action;
 
@@ -26,13 +27,15 @@ class OrderPhotoAction extends Action {
 
 
         if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             if ($model->validate()) {
-                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-                return $model->realPrice;
+
+                $crm = \Yii::createObject(IntegrationRetailCRM::class);
+                $a = $crm->CreateOrderCRM($model);
+                $model->saveOrder();
+                return $a;
             } else {
-                \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
                 return $model->errors;
-                      return $model->errors;
             }
         }
 

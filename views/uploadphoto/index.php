@@ -102,20 +102,13 @@ $js = <<<JS
     data["total_price"] = jQuery('span#order_price span').html();
     data["count"] = jQuery('span#files_count').text();
     data["OrderPhoto[order]"] = order;
-                
-    console.log(data);
     jQuery.post('/uploadphoto/orderphoto', data)
     .done(function (data) {
-        // data = JSON.parse(data);
-        console.log(data);
         orderConfirmed = 1;
         setTimeout(function () {
             switch (data.status) {
-                case 'order_not_exists':
-                    jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Истекло время подтверждения заказа. В связи с этим он был удалён. Пожалуйста, сформируйте новый заказ.</h2>');
-                    break;
                 case 'ok':
-                    jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
+                    jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ №'+data.id+' успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
                     break;
                 default:
                     jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')

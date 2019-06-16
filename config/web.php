@@ -14,6 +14,8 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
         '@pho' => 'web/img/orders/',
+        '@RetailLink' => 'https://pic66.retailcrm.ru',
+        '@RetailToken' => 'IFaqAmOElF74tUqdiCCmr0jlGYjXpc7E' /** доступно только 2 метода. скромные */
     ],
     'components' => [
         'request' => [

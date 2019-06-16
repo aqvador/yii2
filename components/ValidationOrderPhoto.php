@@ -23,7 +23,10 @@ class ValidationOrderPhoto extends Validator {
 
         foreach ($tmp as $v) {
             $price[$v['size']] = $v['price'];
-            $realPrice[$v['size']] = 0;
+            $realPrice[$v['size']]['glossy']['pcs'] = 0;
+            $realPrice[$v['size']]['glossy']['sum'] = 0;
+            $realPrice[$v['size']]['mate']['pcs'] = 0;
+            $realPrice[$v['size']]['mate']['sum'] = 0;
         }
         /** @var  $path Дериктория куда мы качали фотки клиента */
         $path = \Yii::$app->session->get('path');
@@ -40,7 +43,8 @@ class ValidationOrderPhoto extends Validator {
                 return false;
             }
             /** Формируем заказ раскладывая его по папкам */
-            $realPrice[$v['printSize']] += $price[$v['printSize']] * $v['qty'];
+            $realPrice[$v['printSize']][$v['paperType']]['sum'] += $price[$v['printSize']] * $v['qty'];
+            $realPrice[$v['printSize']][$v['paperType']]['pcs'] +=  $v['qty'];
             $file = $path . '/max/' . trim($v['fileName']);
             $crop = ($v['kadr']) ? '/' : '_not_crop/';
             $new_dir = $path . '/order/' . $v['printSize'] . $crop . $v['paperType'] . '/';
@@ -59,15 +63,17 @@ class ValidationOrderPhoto extends Validator {
         /** После перекопирования всех фото,  сожно удалить все файлы проекта.  */
         exec('rm -Rf ' . $path . '/max/');
         exec('rm -Rf ' . $path . '/min/');
-        /** @var  $totalPrice  Сформируем  реальную стоимость заказа */
+        /** @var  $totalPrice  Сформируем  общую стоимость заказа */
         $totalPrice = 0;
         foreach ($realPrice as $k => $v) {
-            if ($v === 0)
-                unset($realPrice[$k]); else $totalPrice += $realPrice[$v];
+            foreach ($v as $item) {
+                if ($item['sum'] != 0)
+                    $totalPrice += $item['sum'];
+            }
         }
-
+        \yii\helpers\ArrayHelper::removeValue($realPrice, 0);
         $model->realPrice = $realPrice;
-        $model->totalPtice = $totalPrice;
+        $model->totalPrice = $totalPrice;
         return true;
     }
 

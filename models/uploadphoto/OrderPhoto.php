@@ -9,6 +9,7 @@
 namespace app\models\uploadphoto;
 
 
+use app\components\OrderPhotoComponent;
 use app\components\ValidationOrderPhoto;
 use yii\base\Model;
 
@@ -22,6 +23,9 @@ class OrderPhoto extends Model {
     public $realPrice;
     public $Answer;
     public $totalPrice;
+    public $orderNumCRM;
+    public $clientIdCrm;
+
 
     public function rules() {
         return [
@@ -48,6 +52,11 @@ class OrderPhoto extends Model {
             ],
 
         ];
+    }
+
+    public function saveOrder() {
+        return \Yii::createObject(OrderPhotoComponent::class)->pushSaveOrder($this);
+
     }
 
 }
