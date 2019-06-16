@@ -64,7 +64,7 @@ use \yii\bootstrap\Html;
             <div id="photoprint_price">
                 <div>Стоимость: <span id="price">0</span> руб.</div>
                 <div>
-                    <input onclick="showOrderForm();" type="button" value="Оформить заказ >>>"/>
+                    <input onclick="showOrderForm();" type="button" value="Оформить заказ"/>
                 </div>
                 <div class="count_files">Общее количество: <span id="files_count">0</span></div>
             </div>
@@ -74,48 +74,4 @@ use \yii\bootstrap\Html;
 
 <?php
 $this->registerJsVar('stock_price', $param);
-$js = <<<JS
-
- $('form').on('beforeSubmit', function(){
-   jQuery('div.order_form').slideUp('slow');
-    jQuery('h3#photoprint_order').slideUp('slow');
-    jQuery('#loading').show('slow');
-    var order = {};
-    jQuery('div.uploader div.file').each(function () {
-        if (!jQuery(this).find('.status').hasClass('error')) {
-            order.push({
-                fileName: jQuery(this).find('.filename').text(),
-                qty: parseInt(jQuery(this).find('.qty').val()),
-                paperType: jQuery(this).find('.paper').val(),
-                printSize: jQuery(this).attr('size'),
-                kadr: jQuery(this).parent().parent().find('.switch input').is(':checked')
-
-            })
-        }
-    });
-    form = $("#OrderFormPhoto :input");
- 	data = {};
-    form.each(function() {
-        data[this.name]  = $(this).val();
-    });
-    data["orderNum"] = jQuery('span#order_num').text();
-    data["total_price"] = jQuery('span#order_price span').html();
-    data["count"] = jQuery('span#files_count').text();
-    data["OrderPhoto[order]"] = order;
-    jQuery.post('/uploadphoto/orderphoto', data)
-    .done(function (data) {
-        orderConfirmed = 1;
-        setTimeout(function () {
-            switch (data.status) {
-                case 'ok':
-                    jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ №'+data.id+' успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
-                    break;
-                default:
-                    jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')
-            }
-        }, 2000)
-    })
- return false;
- });
-JS;
 ?>

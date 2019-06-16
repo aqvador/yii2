@@ -12,35 +12,10 @@ function leaveOrder() {
 
     $.ajax({
         type: "POST",
-        url: "/modules/mod_iz_photoprint/upload.php?stopPropagation",
-        data: {"orderNum": window.order, "secureKey": window.secureKey},
+        url: "/uploadphoto/stop/",
         async: false
     });
-    /*
-  total_photo = 0;
-  jQuery('.file input.qty').each(function () {
-      if (!jQuery(this).hasClass('error') && jQuery(this).hasClass('success')) {
-          total_photo += parseInt(jQuery(this).val())
-      }
-  });
-
-
-  if (orderConfirmed == 0 && total_photo >= 1) {
-      if (!var1) {
-          var1 = window.event
-      };
-      var1.cancelBubble = true;
-      var1.returnValue = 'Вы действительно хотите покинуть данную страницу? Текущий заказ будет анулирован.';
-      if (var1.stopPropagation) {
-          console.log('нажал true');
-          var1.stopPropagation();
-          var1.preventDefault();
-
-      }
-  }
-  */
-}
-
+};
 
 function toggle_mode(model) {
     model.prevantDefault;
@@ -173,7 +148,7 @@ function initUploader(size) {
         onUploadSuccess: function (cnt, answer) {
             if (answer.status === "error") {
                 jQuery.fancybox.open({
-                    src: "<p style=\"text-align: center;\">"+answer.textError+"</p>",
+                    src: "<p style=\"text-align: center;\">" + answer.textError + "</p>",
                     type: "html"
                 }, {
                     animationEffect: "zoom-in-out"
@@ -362,12 +337,12 @@ jQuery('form').on('beforeSubmit', function () {
             orderConfirmed = 1;
             setTimeout(function () {
                 switch (data.status) {
-                  case 'ok':
-                    jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ №'+data.id+' успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
-                    break;
-                default:
-                    jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')
-            }
+                    case 'ok':
+                        jQuery('div#loading').html('<h2 style="text-align: center;">Ваш заказ №' + data.id + ' успешно оформлен!</h2><h4 style="text-align: center;">На ваш email было отправлено письмо с информацией по заказу и оплате. В ближайшее время наши сотрудники с вами свяжутся. Обратите внимание, что в зависимости от уровня фильтрации, письмо с реквизитами может попасть в "Спам".</h4>');
+                        break;
+                    default:
+                        jQuery('div#loading').html('<h2 style="text-align: center; color: #b52e28;">Произошла неизвестная ошибка :(</h2>')
+                }
             }, 2000)
         });
     return false;

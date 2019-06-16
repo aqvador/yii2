@@ -168,7 +168,7 @@ div#upload_block {
     display: block;
     max-width: 300px;
     margin: 20px auto 0px auto;
-    transition: all 0.2s;
+    transition: all 0.4s;
 }
 
 .uploader div.browser label:hover {
@@ -446,8 +446,8 @@ div#photoprint_price div:last-child {
 
 div#photoprint_price > div > input[type="button"] {
     text-transform: uppercase;
-    transition: all 0.2s;
-    background: #015a36;
+    transition: all 0.4s;
+    background: #d7582d;
     color: #fff;
     border: none;
     font-weight: normal;
@@ -457,7 +457,7 @@ div#photoprint_price > div > input[type="button"] {
 
 div#photoprint_price > div > input[type="button"]:hover,
 div#photoprint_price > div > input[type="button"]:active {
-    background: #fff;
+  background: #0086c0;
     color: #000;
 }
 
@@ -476,10 +476,10 @@ div.order_form textarea {
     margin: 0 auto 1rem auto;
     width: 100%;
     max-width: 500px;
-    font-size: 1.4rem;
+    font-size: 1.7rem;
     border-radius: 0;
     border: 1px solid #0086c0;
-    color: #0086c0;
+    color: #2f3f4b;
     text-align: center;
     height: auto;
 }
@@ -495,7 +495,7 @@ div.order_form input[type="button"] {
     max-width: 500px;
     width: 100%;
     margin-bottom: 1rem;
-    transition: all 0.2s;
+    transition: all 0.4s;
     background: #0086c0;
     color: #fff;
     border: none;

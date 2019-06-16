@@ -11,8 +11,7 @@ namespace app\models\uploadphoto;
 
 use app\components\ImageResizeHelperComponent;
 use yii\base\Model;
-use yii\validators\StringValidator;
-use yii\validators\Validator;
+
 
 class Uploadfiles extends Model {
     /**

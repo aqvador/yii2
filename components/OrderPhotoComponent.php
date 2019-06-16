@@ -42,7 +42,7 @@ class OrderPhotoComponent extends Component {
             'orderNumCRM' => $model->orderNumCRM,
             'clientIdCrm' => $model->clientIdCrm,
             'email' => $model->email,
-            'phone' => preg_replace("/[^0-9]/", '', $model->phone),
+            'phone' =>$model->phone,
             'comment' => $model->comment,
             'status' => 'open',
             'totalPrice' => $model->totalPrice

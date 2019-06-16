@@ -35,7 +35,7 @@ class IntegrationRetailCRM extends Component {
             'email' => $model->email,
             'call' => 1,
             'customerComment' => $model->comment,
-//            'createdAt' => '2018-01-01 00:00:00',
+            'managerComment' => 'Папка заказа: ' . \Yii::$app->session->get('folder')
         ];
         if ($clientIdCrm)
             $orderInfo['customer'] = ['id' => $clientIdCrm];

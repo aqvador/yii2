@@ -50,7 +50,23 @@ class OrderPhoto extends Model {
                 'order',
                 ValidationOrderPhoto::className()
             ],
+            [
+                'phone',
+                'filter',
+                'filter' => function ($value) {
+                    return preg_replace("/[^0-9]/", '', $value);
+                }
+            ],
 
+        ];
+    }
+
+    public function attributeLabels() {
+        return [
+            'name' => 'Имя',
+            'email' => 'Email',
+            'phone' => 'Телефон',
+            'comment' => 'Комметраний',
         ];
     }
 

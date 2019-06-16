@@ -14,12 +14,12 @@
 namespace app\controllers;
 
 use app\base\BaseWebController;
-use app\components\IntegrationRetailCRM;
 use app\components\OrderPhotoComponent;
 use app\controllers\uploadphoto\StartUploadPhotoAction;
 use app\controllers\uploadphoto\OrderPhotoAction;
 use app\controllers\uploadphoto\UploadFIlesAction;
 use app\models\uploadphoto\OrderPhoto;
+use yii\helpers\FileHelper;
 
 class UploadphotoController extends BaseWebController {
 
@@ -46,11 +46,9 @@ class UploadphotoController extends BaseWebController {
         return $this->render('index', compact('model', 'size'));
     }
 
-    public function actionIndex2(){
-//        return '2';
-        $crm = \Yii::createObject(IntegrationRetailCRM::class);
-        $a =  print_r($crm->CreateOrderCRM(),1);
-        echo 'Controller'."\n";
-        echo $a;
+    public function actionStop(){
+        if(\Yii::$app->request->isAjax){
+            FileHelper::removeDirectory(\Yii::$app->session->get('path'));
+        }
     }
 }
