@@ -1,9 +1,9 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-if (!is_file(__DIR__ . '/db_local.php'))
-    $db = require __DIR__ . '/db.php';
-else $db = require __DIR__ . '/db_local.php';
+$db = file_exists(__DIR__ . '/db_local.php')?
+    (require __DIR__ . '/db_local.php') :
+    (require __DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
@@ -70,7 +70,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        'allowedIPs' => ['*'],
+        'allowedIPs' => ['127.0.0.1', '82.151.209.202'],
     ];
 
     $config['bootstrap'][] = 'gii';

@@ -72,7 +72,6 @@ class OrderPhoto extends Model {
 
     public function saveOrder() {
         return \Yii::createObject(OrderPhotoComponent::class)->pushSaveOrder($this);
-
     }
 
 }
