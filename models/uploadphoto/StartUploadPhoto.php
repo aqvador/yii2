@@ -10,6 +10,7 @@
 namespace app\models\uploadphoto;
 
 use yii\base\Model;
+use yii\helpers\FileHelper;
 
 Class StartUploadPhoto extends Model {
 
@@ -29,7 +30,7 @@ Class StartUploadPhoto extends Model {
         \Yii::$app->session->set('path', $path);
 
         foreach ($this->folders as $k => $v) {
-            mkdir($path . '/' . $v, 0777, true);
+            FileHelper::createDirectory($path . '/'.$v, 0777, 1);
             if (!is_dir($path . '/' . $v))
                 return false;
         }

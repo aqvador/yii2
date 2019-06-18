@@ -10,7 +10,7 @@ namespace app\models\uploadphoto;
 
 
 use app\components\OrderPhotoComponent;
-use app\components\ValidationOrderPhoto;
+use app\components\validation\ValidationOrderPhoto;
 use yii\base\Model;
 
 class OrderPhoto extends Model {

@@ -16,8 +16,8 @@ use \yii\bootstrap\Html;
             <div id="loading"><img src="/img/uploadphoto/loading.gif"/>
             </div>
             <div class="order_form">
-                <h3 style="color: #0086c0; margin-bottom: 0;">Номер заказа: <span
-							id="order_num"></span></h3>
+<!--                <h3 style="color: #0086c0; margin-bottom: 0;">Номер заказа: <span-->
+<!--							id="order_num"></span></h3>-->
                 <h3 style="color: #0086c0;">К оплате: <span style="color: #d7582d;"
 															id="order_price"></span></h3>
                 <div id="extended_products"
@@ -56,7 +56,7 @@ use \yii\bootstrap\Html;
                 </div>
                 <div id="upload_block">
                     <?php foreach ($size as $k => $v): ?>
-                        <?= Yii::$app->controller->renderPartial('upload', ['item' => $v]); ?>
+                        <?= $this->render('upload', ['item' => $v]); ?>
                     <?php endforeach; ?>
                 </div>
                 <hr style="clear: both; margin-top: 0; padding-top: 1.2rem;"/>
@@ -68,7 +68,7 @@ use \yii\bootstrap\Html;
                 </div>
                 <div class="count_files">Общее количество: <span id="files_count">0</span></div>
             </div>
-            <?= Yii::$app->controller->renderPartial('modal-content'); ?>
+            <?= $this->render('modal-content'); ?>
         </div>
     </div>
 

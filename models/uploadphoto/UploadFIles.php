@@ -30,7 +30,7 @@ class Uploadfiles extends Model {
                 'minWidth' => 200,
                 'maxWidth' => 5315,
                 'minHeight' => 200,
-                'maxHeight' => 3543,
+                'maxHeight' => 5315,
                 'maxSize' => 1024 * 1024 * 25,
                 'minSize' => 102400
             ],
@@ -54,7 +54,20 @@ class Uploadfiles extends Model {
             $file = $this->image->baseName . '.' . $this->image->extension;
             $maxFile = $uploadfilemax . $file;
             $this->image->saveAs($maxFile);
-            $minFile = ImageResizeHelperComponent::init()->image($maxFile, $this->image->baseName)->quality(20)->fit(700, 800);
+
+            //            $minFile = ImageResizeHelperComponent::init()->image($maxFile, $this->image->baseName)->quality(20)->fit(700, 800);
+            /** @var  $ResizeHelper \app\components\ImageResizeHelperComponent */
+            $ResizeHelper = \Yii::createObject([
+                'class' => 'app\components\ImageResizeHelperComponent',
+                'siteRoot' => \Yii::getAlias('@webroot'),
+                'urlMinPhoto' => \Yii::$app->session->get('path') . '/min',
+                'absUrlMinPhoto' => '/img/orders/' . \Yii::$app->session->get('folder') . '/min',
+                'quality' => 20,
+                'defaultImage' => dirname(__FILE__) . '/img/noimage.png',
+            ]);
+            $minFile = $ResizeHelper->image($maxFile, $this->image->baseName)->quality(20)->crop(400, 200);
+
+
             if ($minFile) {
                 return [
                     'status' => [
@@ -68,7 +81,9 @@ class Uploadfiles extends Model {
                 'textError' => "Не удалось  загрузить изображение <br><b>$file</b><br> по всей видимости с ним что-то не то"
             ];
         } else {
+            //            list($width, $height, $type, $attr) = getimagesize($_FILES['file']['tmp_name']);
             $err = $this->errors['image'][0];
+            //            return $width. ' - '. $height;
             return [
                 'status' => 'error',
                 'textError' => "<br><b>$err</b><br>"

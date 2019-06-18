@@ -10,6 +10,7 @@
 namespace app\components;
 
 use Yii;
+use yii\base\BaseObject;
 use yii\base\Component;
 use yii\helpers\FileHelper;
 
@@ -23,7 +24,7 @@ use yii\helpers\FileHelper;
  * echo Html::img(ImageResizeHelper::init()->image('uploads/pic.jpg')->fitHeight(500));
  * echo Html::img(ImageResizeHelper::init()->image('uploads/pic.jpg')->background('ffcccc')->place(500, 500));
  */
-class ImageResizeHelperComponent {
+class ImageResizeHelperComponent extends Component {
     /**
      * @var self
      */
@@ -31,58 +32,50 @@ class ImageResizeHelperComponent {
     /**
      * @var string Путь к папке сайта
      */
-    private $_siteRoot;
+    public $siteRoot;
 
     /**
      * @var string Путь к папке resized
      */
-    private $_urlMinPhoto;
+    public $urlMinPhoto;
 
     /**
      * @var string Ссылка на папку resized
      */
-    private $absUrlMinPhoto;
+    public $absUrlMinPhoto;
 
     /**
      * @var int JPEG качество генерируемых картиноу
      */
-    private $_quality;
+    public $quality;
 
     /**
      * @var string Относительная ссылка на оригинальную картинку
      */
-    private $_origImageFull;
+    public $origImageFull;
 
     /**
      * @var string Путь к картинке по-умолчанию, если не найден оригинал.
      */
-    private $_defaultImage;
+    public $defaultImage;
 
     /**
      * @var array Цвет основы
      */
-    private $_bg;
+    public $bg;
 
-    private $_im;
-    private $_newImageUrl;
-    private $_newImagePath;
+    public $_im;
+    public $newImageUrl;
+    public $newImagePath;
 
+    public function __construct($config = []) {
 
-    public static function init() {
-        $class_name = __CLASS__;
-        return new $class_name;
+        parent::__construct($config);
     }
 
-    /**
-     * __construct
-     */
-    public function __construct() {
-        $this->_siteRoot = Yii::getAlias('@webroot');
-        $this->_urlMinPhoto = Yii::$app->session->get('path') . '/min';
-        $this->absUrlMinPhoto = '/img/orders/' . Yii::$app->session->get('folder') . '/min';
-        $this->_quality = 85;
-        $this->_defaultImage = dirname(__FILE__) . '/img/noimage.png';
-        $this->_bg = ['r' => 255, 'g' => 255, 'b' => 255];
+    public function init() {
+        parent::init(); //
+
     }
 
     /**
@@ -92,9 +85,8 @@ class ImageResizeHelperComponent {
      *
      * @return $this
      */
-    public function image($imageUrl, $name) {
-        $this->_origImageFull = $imageUrl;
-        $this->_origName = $name;
+    public function image($imageUrl) {
+        $this->origImageFull = $imageUrl;
         return $this;
     }
 
@@ -106,7 +98,7 @@ class ImageResizeHelperComponent {
      * @return $this
      */
     public function cachePath($path) {
-        $this->_urlMinPhoto = $path;
+        $this->urlMinPhoto = $path;
         return $this;
     }
 
@@ -130,11 +122,11 @@ class ImageResizeHelperComponent {
      * @return $this
      */
     public function quality($quality) {
-        $this->_quality = (int)$quality;
-        if ($this->_quality > 100)
-            $this->_quality = 100;
-        if ($this->_quality < 1)
-            $this->_quality = 1;
+        $this->quality = (int)$quality;
+        if ($this->quality > 100)
+            $this->quality = 100;
+        if ($this->quality < 1)
+            $this->quality = 1;
         return $this;
     }
 
@@ -146,7 +138,7 @@ class ImageResizeHelperComponent {
      * @return $this
      */
     public function defaultImage($image) {
-        $this->_defaultImage = $image;
+        $this->defaultImage = $image;
         return $this;
     }
 
@@ -158,7 +150,7 @@ class ImageResizeHelperComponent {
      * @return $this
      */
     public function background($hex) {
-        $this->_bg = $this->_hex2rgb($hex);
+        $this->bg = $this->_hex2rgb($hex);
         return $this;
     }
 
@@ -167,12 +159,12 @@ class ImageResizeHelperComponent {
      *
      * @param int $width
      * @param int $height
-     * @param bool $force_resize
+     * @param bool $forceResize
      *
      * @return string Путь к сгенерированной картинке
      */
-    public function crop($width, $height, $force_resize = false) {
-        return $this->_resize($width, $height, true, '', $force_resize);
+    public function crop($width, $height, $forceResize = false) {
+        return $this->resize($width, $height, true, '', $forceResize);
     }
 
     /**
@@ -180,36 +172,36 @@ class ImageResizeHelperComponent {
      *
      * @param int $width
      * @param int $height
-     * @param bool $force_resize
+     * @param bool $forceResize
      *
      * @return string Путь к сгенерированной картинке
      */
-    public function fit($width, $height, $force_resize = false) {
-        return $this->_resize($width, $height, false, '', $force_resize);
+    public function fit($width, $height, $forceResize = false) {
+        return $this->resize($width, $height, false, '', $forceResize);
     }
 
     /**
      * Изменить до нужной ширины
      *
      * @param int $width
-     * @param bool $force_resize
+     * @param bool $forceResize
      *
      * @return string
      */
-    public function fitWidth($width, $force_resize = false) {
-        return $this->_resize($width, $width, false, 'w', $force_resize);
+    public function fitWidth($width, $forceResize = false) {
+        return $this->resize($width, $width, false, 'w', $forceResize);
     }
 
     /**
      * Изменить до нужной высоты
      *
      * @param int $height
-     * @param bool $force_resize
+     * @param bool $forceResize
      *
      * @return string
      */
-    public function fitHeight($height, $force_resize = false) {
-        return $this->_resize($height, $height, false, 'h', $force_resize);
+    public function fitHeight($height, $forceResize = false) {
+        return $this->resize($height, $height, false, 'h', $forceResize);
     }
 
     /**
@@ -217,12 +209,12 @@ class ImageResizeHelperComponent {
      *
      * @param int $width
      * @param int $height
-     * @param bool $force_resize
+     * @param bool $forceResize
      *
      * @return string
      */
-    public function place($width, $height, $force_resize = false) {
-        return $this->_resize($width, $height, false, 'p', $force_resize);
+    public function place($width, $height, $forceResize = false) {
+        return $this->resize($width, $height, false, 'p', $forceResize);
     }
 
     /**
@@ -232,16 +224,16 @@ class ImageResizeHelperComponent {
      * @param int $height
      * @param bool $crop
      * @param string $fitwh 'w' или 'h'
-     * @param bool $force_resize Форсировать генерацию, если исходные и конечные размеры одинаковы
+     * @param bool $forceResize Форсировать генерацию, если исходные и конечные размеры одинаковы
      *
      * @return string Путь к сгенерированной картинке
      */
-    private function _resize($width, $height, $crop = true, $fitwh = '', $force_resize = false) {
-        //       return $this->_siteRoot;
-        //       return $this->_urlMinPhoto;
+    private function resize($width, $height, $crop = true, $fitwh = '', $forceResize = false) {
+        //       return $this->siteRoot;
+        //       return $this->urlMinPhoto;
         //       return $this->absUrlMinPhoto;
-        $orig_image_url = $this->_origImageFull;
-        $full_path = $this->_origImageFull;
+        $orig_image_url = $this->origImageFull;
+        $full_path = $this->origImageFull;
         $width = (int)$width;
         $height = (int)$height;
         $mimeType = FileHelper::getMimeType($full_path);
@@ -252,15 +244,15 @@ class ImageResizeHelperComponent {
         $h = $sizes[1];
 
         // имя и путь к новой картинке (все в JPEG)
-        $new_filename = time()*rand(99999,100000000)+rand(1,1000) . '.jpg';
+        $new_filename = time() * rand(99999, 100000000) + rand(1, 1000) . '.jpg';
         $new_folder_p1 = $width . 'x' . $height;
         if (!$crop && $fitwh == 'w')
             $new_folder_p1 = $width;
         if (!$crop && $fitwh == 'h')
             $new_folder_p1 = $height;
-        $new_folder_p1 .= '-q' . $this->_quality;
-        if ($this->_bg['r'] != 255 || $this->_bg['g'] != 255 || $this->_bg['b'] != 255)
-            $new_folder_p1 .= '-' . $this->_rgb2hex($this->_bg);
+        $new_folder_p1 .= '-q' . $this->quality;
+        if ($this->bg['r'] != 255 || $this->bg['g'] != 255 || $this->bg['b'] != 255)
+            $new_folder_p1 .= '-' . $this->_rgb2hex($this->bg);
         if ($crop)
             $new_folder_p1 .= '-crop';
         if (!$crop && $fitwh == 'w')
@@ -269,8 +261,8 @@ class ImageResizeHelperComponent {
             $new_folder_p1 .= '-fith';
 
         // новая ссылка и абсолютный путь
-        $this->_newImageUrl = $this->absUrlMinPhoto . '/' . $new_filename;
-        $this->_newImagePath = $this->_urlMinPhoto . DIRECTORY_SEPARATOR . $new_filename;
+        $this->newImageUrl = $this->absUrlMinPhoto . '/' . $new_filename;
+        $this->newImagePath = $this->urlMinPhoto . DIRECTORY_SEPARATOR . $new_filename;
 
         // создаем ресурс из исходной картинки
         $this->_im = false;
@@ -334,33 +326,14 @@ class ImageResizeHelperComponent {
             }
 
             // создание и копирование
-            $this->_saveImage($width, $height, $dst_x, $dst_y, $x, $y, $new_w, $new_h, $w, $h);
+            $this->saveImage($width, $height, $dst_x, $dst_y, $x, $y, $new_w, $new_h, $w, $h);
 
             // новый путь
-            if (is_file($this->_newImagePath))
-                return $this->_newImageUrl;
+            if (is_file($this->newImagePath))
+                return $this->newImageUrl;
         }
 
         return $full_path;
-    }
-
-    /**
-     * Почистим путь к картинке
-     */
-    private function _clearImagePath() {
-        $this->_origImageFull = trim(str_replace([
-            '\\',
-            '/'
-        ], DIRECTORY_SEPARATOR, $this->_origImageFull), DIRECTORY_SEPARATOR);
-    }
-
-    /**
-     * Зададим абсолютный путь к картинке
-     *
-     * @return string
-     */
-    private function _getFullPath() {
-        return $this->_siteRoot . DIRECTORY_SEPARATOR . $this->_origImageFull;
     }
 
     /**
@@ -375,16 +348,17 @@ class ImageResizeHelperComponent {
      * @param int $w
      * @param int $h
      */
-    private function _saveImage($width, $height, $dst_x, $dst_y, $x, $y, $new_w, $new_h, $w, $h) {
+
+    private function saveImage($width, $height, $dst_x, $dst_y, $x, $y, $new_w, $new_h, $w, $h) {
         // создание и копирование
         $new_im = imagecreatetruecolor($width, $height);
-        $bg_color = imagecolorallocate($new_im, $this->_bg['r'], $this->_bg['g'], $this->_bg['b']);
+        $bg_color = imagecolorallocate($new_im, $this->bg['r'], $this->bg['g'], $this->bg['b']);
         imagefill($new_im, 0, 0, $bg_color);
         imagecopyresampled($new_im, $this->_im, $dst_x, $dst_y, $x, $y, $new_w, $new_h, $w, $h);
 
         // сохранение
         // все в JPEG
-        imagejpeg($new_im, $this->_newImagePath, $this->_quality);
+        imagejpeg($new_im, $this->newImagePath, $this->quality);
 
         imagedestroy($this->_im);
         imagedestroy($new_im);

@@ -109,7 +109,7 @@ function add_file(cnt, file, size) {
 function update_file_status(cnt, status, var10, size) {
     var _0xbc7cx1c = jQuery("#uploadFile" + size + "_" + cnt).find("span.status");
     if (status !== "uploading") {
-        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("opacity", "0");
+        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("opacity", "0").addClass('success');
         _0xbc7cx1c.addClass(status).addClass(var10).css("display", "block");
         _0xbc7cx1c.html("");
     }
@@ -281,11 +281,16 @@ function calcPrice() {
 
 function showOrderForm() {
 
-    if (jQuery('span.status').is('.uploading:not(.success)')) {
-        alert('Некоторые Ваши файлы находятся в процессе загрузки. Пожалуйста, дождитесь окончания процесса.');
-        return false
+    if (jQuery(".progress").is('.progress:not(.success)')) {
+                    jQuery.fancybox.open({
+                src: '<p style="text-align: center;">Некоторые Ваши файлы находятся в процессе загрузки. Пожалуйста, дождитесь окончания процесса.</p>',
+                type: "html"
+            }, {
+                animationEffect: "zoom-in-out"
+            });
+        return false;
     }
-    ;
+
     jQuery('span#order_num').html(window.order);
     window.order = 'processing';
     jQuery('div#photoprint_form').slideUp('slow');
