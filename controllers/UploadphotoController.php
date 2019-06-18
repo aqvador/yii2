@@ -21,10 +21,18 @@ use app\controllers\uploadphoto\UploadFIlesAction;
 use app\models\uploadphoto\OrderPhoto;
 use yii\helpers\FileHelper;
 
+/**
+ * Class UploadphotoController
+ *
+ * @package app\controllers
+ */
 class UploadphotoController extends BaseWebController {
 
 
-    public function actions() {
+	/**
+	 * @return array
+	 */
+	public function actions() {
         return [
             'numorders' => [
                 'class' => StartUploadPhotoAction::class
@@ -38,7 +46,11 @@ class UploadphotoController extends BaseWebController {
         ];
     }
 
-    public function actionIndex() {
+	/**
+	 * @return string
+	 * @throws \yii\base\InvalidConfigException
+	 */
+	public function actionIndex() {
         $model = new OrderPhoto();
         $comp = \Yii::createObject(OrderPhotoComponent::class);
         $size = $comp->getSizePhoto();
@@ -46,7 +58,10 @@ class UploadphotoController extends BaseWebController {
         return $this->render('index', compact('model', 'size'));
     }
 
-    public function actionStop(){
+	/**
+	 * @throws \yii\base\ErrorException
+	 */
+	public function actionStop(){
         if(\Yii::$app->request->isAjax){
             FileHelper::removeDirectory(\Yii::$app->session->get('path'));
         }
