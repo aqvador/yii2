@@ -1,7 +1,9 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$db = file_exists(__DIR__ . '/db_local.php')?
+    (require __DIR__ . '/db_local.php') :
+    (require __DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
@@ -11,6 +13,9 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm' => '@vendor/npm-asset',
+        '@pho' => 'web/img/orders/',
+        '@RetailLink' => 'https://pic66.retailcrm.ru',
+        '@RetailToken' => 'IFaqAmOElF74tUqdiCCmr0jlGYjXpc7E' /** доступно только 2 метода. скромные */
     ],
     'components' => [
         'request' => [
@@ -65,7 +70,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '82.151.209.202'],
     ];
 
     $config['bootstrap'][] = 'gii';
