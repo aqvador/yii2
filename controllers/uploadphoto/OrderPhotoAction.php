@@ -17,6 +17,11 @@ class OrderPhotoAction extends Action {
 
     public $realPrice;
 
+    /**
+     * @return array|string
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
     public function run() {
 
         $model = new OrderPhoto();
@@ -36,6 +41,7 @@ class OrderPhotoAction extends Action {
                 return $a;
             } else {
                 return $model->errors;
+
             }
         }
 

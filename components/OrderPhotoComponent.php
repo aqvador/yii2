@@ -27,9 +27,17 @@ class OrderPhotoComponent extends Component {
     public function getSizePhoto() {
         $query = new Query();
 
-        return $query->select(['*'])->from('PhotoSize')->andWhere(['active' => 1])->orderBy(['position' => 4])->createCommand()->queryAll();
+        try {
+            return $query->select(['*'])->from('PhotoSize')->andWhere(['active' => 1])->orderBy(['position' => 4])->createCommand()->queryAll();
+        } catch (Exception $e) {
+        }
     }
 
+    /**
+     * @param $model
+     * @return int
+     * @throws Exception
+     */
     public function pushSaveOrder($model) {
         /** @var  $model \app\models\uploadphoto\OrderPhoto */
         $query = new Query();

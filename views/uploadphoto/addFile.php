@@ -3,7 +3,7 @@
         <div class="preview_image">
             <input onclick="removeImage('uploadFile{{size}}_{{count}}')" type="button" title="Удалить изображение"
                    value="x" class="delete_img">
-            <img src="/img/uploadphoto/loading2.gif"">
+            <img src="/img/uploadphoto/loading2.gif">
         </div>
         <div class="filename" title="{{title}}">{{title}}
         </div>

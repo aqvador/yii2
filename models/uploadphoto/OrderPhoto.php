@@ -48,7 +48,7 @@ class OrderPhoto extends Model {
             ],
             [
                 'order',
-                ValidationOrderPhoto::className()
+                ValidationOrderPhoto::class
             ],
             [
                 'phone',
@@ -70,6 +70,11 @@ class OrderPhoto extends Model {
         ];
     }
 
+    /**
+     * @return int
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
     public function saveOrder() {
         return \Yii::createObject(OrderPhotoComponent::class)->pushSaveOrder($this);
     }

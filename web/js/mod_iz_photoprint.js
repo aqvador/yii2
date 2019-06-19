@@ -15,7 +15,7 @@ function leaveOrder() {
         url: "/uploadphoto/stop/",
         async: false
     });
-};
+}
 
 function toggle_mode(model) {
     model.prevantDefault;
@@ -109,7 +109,7 @@ function add_file(cnt, file, size) {
 function update_file_status(cnt, status, var10, size) {
     var _0xbc7cx1c = jQuery("#uploadFile" + size + "_" + cnt).find("span.status");
     if (status !== "uploading") {
-        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("opacity", "0").addClass('success');
+        jQuery("#uploadFile" + size + "_" + cnt + " .progress").css("opacity", "0").addClass("success");
         _0xbc7cx1c.addClass(status).addClass(var10).css("display", "block");
         _0xbc7cx1c.html("");
     }

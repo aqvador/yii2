@@ -22,7 +22,7 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'EZGhHfbOf9W08K9fqwJ2yA6Jnyv9KFR1',
         ],
-        'activity' => ['class' => \app\commands\ActivityComponentt::class],
+        'activity' => ['class' => \app\components\ActivityComponent::class],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],

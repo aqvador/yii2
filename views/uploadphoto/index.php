@@ -13,7 +13,7 @@ use \yii\bootstrap\Html;
         <div class="moduletable ">
             <h3 id="photoprint_order" data-mid="116" onclick="showPhotoprintForm();"
 				class="button_glow"> Приступить к оформлению заказа</h3>
-            <div id="loading"><img src="/img/uploadphoto/loading.gif"/>
+            <div id="loading"><img src="/img/uploadphoto/loading.gif" alt="Загрузка"/>
             </div>
             <div class="order_form">
 <!--                <h3 style="color: #0086c0; margin-bottom: 0;">Номер заказа: <span-->
@@ -26,13 +26,13 @@ use \yii\bootstrap\Html;
                     'id' => 'OrderFormPhoto',
                 ]) ?>
                 <?= $form->field($model, 'name')->textInput()->label('Имя'); ?>
-                <?= $form->field($model, 'email')->widget(\yii\widgets\MaskedInput::className(), [
+                <?= $form->field($model, 'email')->widget(\yii\widgets\MaskedInput::class, [
                     'name' => 'input-36',
                     'clientOptions' => [
                         'alias' => 'email'
                     ]
                 ])->textInput(['placeholder' => 'name@exemple.ru'])->label('Ваш email') ?>
-                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+7 (999) 999-99-99'])->textInput(['placeholder' => '+7 (999) 999-99-99'])->label('Ваш телефон'); ?>
+                <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::class, ['mask' => '+7 (999) 999-99-99'])->textInput(['placeholder' => '+7 (999) 999-99-99'])->label('Ваш телефон'); ?>
                 <?= $form->field($model, 'comment')->textarea()->label('Комментарий') ?>
                 <?= Html::submitInput('Подтвердить заказ'); ?>
                 <?php $form = ActiveForm::end() ?>

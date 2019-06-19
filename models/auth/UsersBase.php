@@ -16,16 +16,11 @@ use Yii;
  * @property string $createAt
  */
 class UsersBase extends BaseActiveRecord {
-	/**
-	 * {@inheritdoc}
-	 */
+
 	public static function tableName(){
 		return 'users';
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function rules(){
 		return [
 			[['email', 'passwordHash'], 'required'],
@@ -37,9 +32,6 @@ class UsersBase extends BaseActiveRecord {
 		];
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
 	public function attributeLabels(){
 		return [
 			'id' => Yii::t('app', 'ID'),
