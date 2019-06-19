@@ -8,15 +8,16 @@
 
 namespace app\controllers\uploadphoto;
 
+use app\controllers\BaseActions;
 use app\models\uploadphoto\StartUploadPhoto;
-use yii\base\Action;
 
-class StartUploadPhotoAction extends Action {
+class StartUploadPhotoAction extends BaseActions {
 
     public $imageFile;
     public $tpl;
 
     public function run() {
+        parent::run();
         $model = new StartUploadPhoto;
         $model->Сreate();
         if (\Yii::$app->request->isAjax) {

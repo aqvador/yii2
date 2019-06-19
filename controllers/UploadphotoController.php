@@ -35,13 +35,16 @@ class UploadphotoController extends BaseWebController {
     public function actions() {
         return [
             'numorders' => [
-                'class' => StartUploadPhotoAction::class
+                'class' => StartUploadPhotoAction::class,
+                'title' => 'Заказ фотографий на печать',
             ],
             'uploadfiles' => [
                 'class' => UploadFIlesAction::class,
+                'title' => 'Заказ фотографий на печать'
             ],
             'orderphoto' => [
                 'class' => OrderPhotoAction::class,
+                'title' => 'Заказ фотографий на печать'
             ]
         ];
     }
@@ -51,6 +54,7 @@ class UploadphotoController extends BaseWebController {
      * @throws \yii\base\InvalidConfigException
      */
     public function actionIndex() {
+        \Yii::$app->getView()->params['title'] = 'Заказ фотографий на печать';
         $model = new OrderPhoto();
         $comp = \Yii::createObject(OrderPhotoComponent::class);
         $size = $comp->getSizePhoto();

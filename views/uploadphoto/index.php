@@ -74,4 +74,7 @@ use \yii\bootstrap\Html;
 
 <?php
 $this->registerJsVar('stock_price', $param);
+$this->registerJsFile('@web/js/mod_iz_photoprint.js');
+$this->registerCssFile('@web/js/dmuploader.min.js');
+$this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js');
 ?>

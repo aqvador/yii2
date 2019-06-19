@@ -19,11 +19,13 @@ class AuthController extends BaseWebController {
      */
     public function actions() {
         return [
-            'signup' => [
-                'class' => AuthSignUpActions::class
+            'sign-up' => [
+                'class' => AuthSignUpActions::class,
+                'title' => 'Регистрация'
             ],
-            'signIn' => [
-                'class' => AuthSignInActions::class
+            'sign-in' => [
+                'class' => AuthSignInActions::class,
+                'title' => 'Авторизация'
             ]
         ];
     }
