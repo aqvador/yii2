@@ -47,3 +47,4 @@ class RbacController extends Controller {
         return \Yii::$app->user->can('uploadphoto');
     }
 }
+
