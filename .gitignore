@@ -1,1 +1,4 @@
-.ideacomposer.lock/vendor//config/db_local.php
+.idea
+composer.lock
+/vendor/
+/config/db_local.php
