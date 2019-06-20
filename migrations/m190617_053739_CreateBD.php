@@ -50,16 +50,20 @@ class m190617_053739_CreateBD extends Migration {
         ]);
 
         $user = [
-            ['email' => 'admin@test.ru', 'password' => '111111'],
-            ['email' => 'user@test.ru', 'password' => '111111']
+            ['email' => 'admin@test.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Анатолий'],
+            ['email' => 'user@test.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Анатолий'],
+            ['email' => 'as@alltel24.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Александр'],
+            ['email' => 'as@pic66.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Александр'],
         ];
-        foreach ($user as $v) {
+        foreach ($user as $k => $v) {
             $this->insert('users', [
-                'name' => 'Имя человека',
+                'name' => $v['name'] . ' ' . $v['rule'],
                 'phone' => '7950' . rand(1234567, 9876543),
                 'email' => $v['email'],
                 'passwordHash' => Yii::$app->security->generatePasswordHash($v['password']),
             ]);
+            $userRole = Yii::$app->authManager->getRole($v['rule']);
+            Yii::$app->authManager->assign($userRole, ++$k);
         }
         $insertStr = [
             ['size' => '9x13', 'price' => '10', 'active' => 1, 'position' => 1, 'chosen' => 0],
@@ -80,15 +84,6 @@ class m190617_053739_CreateBD extends Migration {
                 'active' => $v['active'],
                 'position' => $v['position'],
                 'chosen' => $v['chosen']
-            ]);
-        }
-
-        for ($i = 0; $i < 100; $i++) {
-            $this->insert('users', [
-                'name' => 'Имя человека' . $i,
-                'phone' => '7950' . rand(1234567, 9876543),
-                'email' => rand(10 ,20) . $i . 'test@test.test',
-                'passwordHash' => Yii::$app->security->generatePasswordHash('111111') . $i,
             ]);
         }
 

@@ -2,9 +2,10 @@
 
 namespace app\controllers;
 
-use app\base\BaseWebController;
 use app\controllers\auth\AuthSignInActions;
 use app\controllers\auth\AuthSignUpActions;
+use app\models\auth\Users;
+use yii\web\Controller;
 
 
 /**
@@ -12,7 +13,7 @@ use app\controllers\auth\AuthSignUpActions;
  *
  * @package app\controllers
  */
-class AuthController extends BaseWebController {
+class AuthController extends Controller {
 
     /**
      * @return array
@@ -28,5 +29,14 @@ class AuthController extends BaseWebController {
                 'title' => 'Авторизация'
             ]
         ];
+    }
+
+    /**
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionLogOut() {
+        \Yii::$app->user->logout();
+
+        return $this->goHome();
     }
 }

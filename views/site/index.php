@@ -2,16 +2,16 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'Домашки по Yii2';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Lesson_2!</h1>
+        <h1>Lesson_5!</h1>
 
         <p class="lead">Челноков Александр</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <p><a class="btn btn-lg btn-success" href="/uploadphoto">Начать грузить</a></p>
     </div>
 
     <div class="body-content">

@@ -20,7 +20,7 @@ class AuthSignInActions extends BaseActions {
 
         if (\Yii::$app->request->isPost && $model->load(\Yii::$app->request->post())) {
             if ($this->getAuthComponent()->signIn($model)) {
-               return $this->controller->redirect(['/uploadphoto/index']);
+                return $this->controller->redirect(['/uploadphoto/index']);
             }
 
         }
@@ -29,7 +29,7 @@ class AuthSignInActions extends BaseActions {
 
     }
 
-        /** @return AuthComponent */
+    /** @return AuthComponent */
     private function getAuthComponent() {
         return \Yii::$app->auth;
     }

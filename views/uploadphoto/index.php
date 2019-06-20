@@ -17,7 +17,7 @@ use \yii\bootstrap\Html;
             </div>
             <div class="order_form">
 <!--                <h3 style="color: #0086c0; margin-bottom: 0;">Номер заказа: <span-->
-<!--							id="order_num"></span></h3>-->
+				<!--							id="order_num"></span></h3>-->
                 <h3 style="color: #0086c0;">К оплате: <span style="color: #d7582d;"
 															id="order_price"></span></h3>
                 <div id="extended_products"
@@ -73,8 +73,7 @@ use \yii\bootstrap\Html;
     </div>
 
 <?php
+$this->registerJsFile('@web/js/mod_iz_photoprint.js', ['depends' => [yii\web\YiiAsset::class]]);
+$this->registerJsFile('@web/js/dmuploader.min.js', ['depends' => [yii\web\YiiAsset::class]]);
+$this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', ['depends' => [yii\web\YiiAsset::class]]);
 $this->registerJsVar('stock_price', $param);
-$this->registerJsFile('@web/js/mod_iz_photoprint.js');
-$this->registerCssFile('@web/js/dmuploader.min.js');
-$this->registerCssFile('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js');
-?>

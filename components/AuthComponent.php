@@ -14,7 +14,7 @@ class AuthComponent extends Component {
      * @return bool
      * @throws \yii\base\Exception
      */
-    public function signUp(Users &$model):bool {
+    public function signUp(Users &$model): bool {
         if (!$model->validate(['email', 'password'])) {
             return false;
         }
@@ -24,7 +24,8 @@ class AuthComponent extends Component {
         if (!$model->save()) {
             return false;
         }
-
+        $userRole = \Yii::$app->authManager->getRole('user');
+        \Yii::$app->authManager->assign($userRole, $model->id);
         return true;
     }
 
@@ -48,7 +49,7 @@ class AuthComponent extends Component {
      * @param Users $model
      * @return bool
      */
-    public function signIn(Users &$model):bool {
+    public function signIn(Users &$model): bool {
 
         if (!$model->validate(['email', 'password'])) {
             return false;
@@ -60,10 +61,10 @@ class AuthComponent extends Component {
             return false;
         }
 
-        return \Yii::$app->user->login($user, 600);
+        return \Yii::$app->user->login($user, 3600);
     }
 
-    private function getUserByEmail($email):Users {
+    private function getUserByEmail($email): Users {
         return Users::find()->andWhere(['email' => $email])->limit(1)->one();
     }
 

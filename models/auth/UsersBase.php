@@ -2,6 +2,7 @@
 
 namespace app\models\auth;
 
+use app\base\BaseActiveRecord;
 use Yii;
 
 /**
@@ -16,7 +17,7 @@ use Yii;
  * @property string $authKey
  * @property string $createAt
  */
-class UsersBase extends \yii\db\ActiveRecord {
+class UsersBase extends BaseActiveRecord {
     /**
      * {@inheritdoc}
      */

@@ -66,6 +66,9 @@ class Users extends UsersBase implements IdentityInterface {
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getUsername(){
         return $this->email;
     }
@@ -100,7 +103,7 @@ class Users extends UsersBase implements IdentityInterface {
      * @return string|int an ID that uniquely identifies a user identity.
      */
     public function getId() {
-        $this->id;
+       return  $this->id;
     }
 
     /**
@@ -121,7 +124,7 @@ class Users extends UsersBase implements IdentityInterface {
      * @see validateAuthKey()
      */
     public function getAuthKey() {
-       $this->authKey;
+      return  $this->authKey;
     }
 
     /**
@@ -132,7 +135,7 @@ class Users extends UsersBase implements IdentityInterface {
      * @return bool whether the given authController key is valid.
      * @see getAuthKey()
      */
-    public function validateAuthKey($authKey) {
+    public function validateAuthKey($authKey):bool {
        return $this->authKey==$authKey;
     }
 }

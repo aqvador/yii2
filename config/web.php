@@ -1,9 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
-$db = file_exists(__DIR__ . '/db_local.php')?
-    (require __DIR__ . '/db_local.php') :
-    (require __DIR__ . '/db.php');
+$db = file_exists(__DIR__ . '/db_local.php') ? (require __DIR__ . '/db_local.php') : (require __DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
@@ -15,9 +13,13 @@ $config = [
         '@npm' => '@vendor/npm-asset',
         '@pho' => 'web/img/orders/',
         '@RetailLink' => 'https://pic66.retailcrm.ru',
-        '@RetailToken' => 'IFaqAmOElF74tUqdiCCmr0jlGYjXpc7E' /** доступно только 2 метода. скромные */
+        '@RetailToken' => 'IFaqAmOElF74tUqdiCCmr0jlGYjXpc7E'
+        /** доступно только 2 метода. скромные */
     ],
     'components' => [
+        'authManager' => [
+            'class' => \yii\rbac\DbManager::class
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'EZGhHfbOf9W08K9fqwJ2yA6Jnyv9KFR1',
@@ -26,12 +28,15 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'rbac' => [
+            'class' => \app\components\RbacComponent::class
+        ],
         'user' => [
             'identityClass' => \app\models\auth\Users::class,
-            'enableAutoLogin' => true,
+            //            'enableAutoLogin' => true,
         ],
         'auth' => [
-          'class' => \app\components\AuthComponent::class
+            'class' => \app\components\AuthComponent::class
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -80,7 +85,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-		'allowedIPs' => ['127.0.0.1', '82.151.209.202'],
+        'allowedIPs' => ['127.0.0.1', '82.151.209.202'],
     ];
 }
 

@@ -18,7 +18,7 @@ class AuthSignUpActions extends BaseActions {
 
         if (\Yii::$app->request->isPost && $model->load(\Yii::$app->request->post())) {
             if ($this->getAuthComponent()->signUp($model)) {
-            return $this->controller->redirect(['/auth/sign-in']);
+                return $this->controller->redirect(['/auth/sign-in']);
             };
 
         }

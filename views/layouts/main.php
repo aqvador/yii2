@@ -45,7 +45,7 @@ AppAsset::register($this);
         Yii::$app->user->isGuest ? ([
             'label' => 'Войти',
             'url' => ['/auth/sign-in']
-        ]) : ('<li>' . Html::beginForm(['/auth/sign-in'], 'post') . Html::submitButton('Выйти (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']) . Html::endForm() . '</li>')
+        ]) : ('<li>' . Html::beginForm(['/auth/log-out'], 'post') . Html::submitButton('Выйти (' . Yii::$app->user->identity->name . ')', ['class' => 'btn btn-link logout']) . Html::endForm() . '</li>')
     ];
     #Если есть последняя посещенная страница упользователя, то добавим ее в конец меню
     echo Nav::widget($nav);
