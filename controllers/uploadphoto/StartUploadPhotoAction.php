@@ -19,7 +19,7 @@ class StartUploadPhotoAction extends BaseActions {
     public function run() {
 
         parent::run();
-        
+
         $model = new StartUploadPhoto;
         $model->Сreate();
         if (\Yii::$app->request->isAjax) {
