@@ -2,10 +2,9 @@
 
 namespace app\controllers\auth;
 
+use app\base\BaseActions;
 use app\components\AuthComponent;
-use app\controllers\BaseActions;
 use app\models\auth\Users;
-use yii\base\Action;
 
 class AuthSignUpActions extends BaseActions {
     /**

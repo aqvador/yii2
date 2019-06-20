@@ -19,6 +19,7 @@ use app\controllers\uploadphoto\StartUploadPhotoAction;
 use app\controllers\uploadphoto\OrderPhotoAction;
 use app\controllers\uploadphoto\UploadFIlesAction;
 use app\models\uploadphoto\OrderPhoto;
+use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
 
 /**
@@ -70,4 +71,5 @@ class UploadphotoController extends BaseWebController {
             FileHelper::removeDirectory(\Yii::$app->session->get('path'));
         }
     }
+
 }

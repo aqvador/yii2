@@ -2,8 +2,8 @@
 
 namespace app\controllers\auth;
 
+use app\base\BaseActions;
 use app\components\AuthComponent;
-use app\controllers\BaseActions;
 use app\models\auth\Users;
 
 class AuthSignInActions extends BaseActions {

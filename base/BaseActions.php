@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\controllers;
+namespace app\base;
 
 
 use yii\base\Action;

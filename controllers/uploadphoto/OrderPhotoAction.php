@@ -10,7 +10,7 @@ namespace app\controllers\uploadphoto;
 
 
 use app\components\IntegrationRetailCRM;
-use app\controllers\BaseActions;
+use app\base\BaseActions;
 use app\models\uploadphoto\OrderPhoto;
 
 class OrderPhotoAction extends BaseActions {

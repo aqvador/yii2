@@ -7,7 +7,7 @@
 
 namespace app\controllers\uploadphoto;
 
-use app\controllers\BaseActions;
+use app\base\BaseActions;
 use app\models\uploadphoto\UploadFIles;
 use yii\web\UploadedFile;
 

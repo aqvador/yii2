@@ -8,7 +8,7 @@
 
 namespace app\controllers\uploadphoto;
 
-use app\controllers\BaseActions;
+use app\base\BaseActions;
 use app\models\uploadphoto\StartUploadPhoto;
 
 class StartUploadPhotoAction extends BaseActions {
