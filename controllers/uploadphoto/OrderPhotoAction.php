@@ -10,14 +10,20 @@ namespace app\controllers\uploadphoto;
 
 
 use app\components\IntegrationRetailCRM;
+use app\base\BaseActions;
 use app\models\uploadphoto\OrderPhoto;
-use yii\base\Action;
 
-class OrderPhotoAction extends Action {
+class OrderPhotoAction extends BaseActions {
 
     public $realPrice;
 
+    /**
+     * @return array|string
+     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
+     */
     public function run() {
+        parent::run();
 
         $model = new OrderPhoto();
 
@@ -36,6 +42,7 @@ class OrderPhotoAction extends Action {
                 return $a;
             } else {
                 return $model->errors;
+
             }
         }
 

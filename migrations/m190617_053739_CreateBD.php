@@ -37,15 +37,34 @@ class m190617_053739_CreateBD extends Migration {
             'eventtime' => $this->dateTime()->notNull()->defaultExpression('CURRENT_TIMESTAMP')->comment('дата, время создания заказа')
         ]);
 
+
         $this->createTable('users', [
             'id' => $this->primaryKey(),
+            'name' => $this->string(50)->notNull(),
+            'phone' => $this->string(21)->notNull(),
             'email' => $this->string(100)->notNull()->unique(),
             'passwordHash' => $this->string(300)->notNull(),
             'authToken' => $this->string(300),
-            'authKet' => $this->string(150),
+            'authKey' => $this->string(150),
             'createAt' => $this->dateTime()->notNull()->defaultExpression('CURRENT_TIMESTAMP')
         ]);
 
+        $user = [
+            ['email' => 'admin@test.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Анатолий'],
+            ['email' => 'user@test.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Анатолий'],
+            ['email' => 'as@alltel24.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Александр'],
+            ['email' => 'as@pic66.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Александр'],
+        ];
+        foreach ($user as $k => $v) {
+            $this->insert('users', [
+                'name' => $v['name'] . ' ' . $v['rule'],
+                'phone' => '7950' . rand(1234567, 9876543),
+                'email' => $v['email'],
+                'passwordHash' => Yii::$app->security->generatePasswordHash($v['password']),
+            ]);
+            $userRole = Yii::$app->authManager->getRole($v['rule']);
+            Yii::$app->authManager->assign($userRole, ++$k);
+        }
         $insertStr = [
             ['size' => '9x13', 'price' => '10', 'active' => 1, 'position' => 1, 'chosen' => 0],
             ['size' => '10x15', 'price' => '15', 'active' => 1, 'position' => 2, 'chosen' => 1],
@@ -75,13 +94,13 @@ class m190617_053739_CreateBD extends Migration {
      * {@inheritdoc}
      */
     public function safeDown() {
-//        echo "m190617_053739_CreateBD cannot be reverted.\n";
+        //        echo "m190617_053739_CreateBD cannot be reverted.\n";
 
         $this->dropTable('PhotoSize');
         $this->dropTable('orders');
         $this->dropTable('users');
 
-//        return false;
+        //        return false;
     }
 
     /*

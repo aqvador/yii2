@@ -11,21 +11,27 @@
 namespace app\components\validation;
 
 
+use app\components\OrderPhotoComponent;
 use yii\helpers\FileHelper;
 use yii\validators\Validator;
 
 class ValidationOrderPhoto extends Validator {
 
+    /**
+     * @param \yii\base\Model $model
+     * @param string $attribute
+     * @return bool|void
+     * @throws \yii\base\ErrorException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
+     */
     public function validateAttribute($model, $attribute) {
-        /** @var  $order Готовый заказ. массив со всеми значениями */
         $order = json_decode(\Yii::$app->request->post('OrderPhoto')[$attribute], 1);
-        /** @var  $tmp Данные о доступных размерах и их ценах */
         $tmp = \Yii::createObject(OrderPhotoComponent::class)->getSizePhoto();
 
         foreach ($tmp as $v) {
             $price[$v['size']] = $v['price'];
         }
-        /** @var  $path Дериктория куда мы качали фотки клиента */
         $path = \Yii::$app->session->get('path');
         /** Если нет директории то валидация не пройдена */
         if (!is_dir($path)) {
@@ -65,7 +71,6 @@ class ValidationOrderPhoto extends Validator {
         /** После перекопирования всех фото,  сожно удалить все файлы проекта.  */
         FileHelper::removeDirectory($path . '/max/');
         FileHelper::removeDirectory($path . '/min/');
-        /** @var  $totalPrice  Сформируем  общую стоимость заказа */
         $totalPrice = 0;
         foreach ($realPrice as $k => $v) {
             foreach ($v as $item) {

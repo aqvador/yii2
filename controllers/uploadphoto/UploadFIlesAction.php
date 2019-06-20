@@ -7,15 +7,15 @@
 
 namespace app\controllers\uploadphoto;
 
+use app\base\BaseActions;
 use app\models\uploadphoto\UploadFIles;
-use yii\base\Action;
 use yii\web\UploadedFile;
 
-class UploadFIlesAction extends Action {
+class UploadFIlesAction extends BaseActions {
 
 
     public function run() {
-
+        parent::run();
         $model = new UploadFIles;
         if (\Yii::$app->request->isPost) {
             $model->image = UploadedFile::getInstanceByName('file');
