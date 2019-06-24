@@ -39,9 +39,10 @@ AppAsset::register($this);
     $nav['options'] = ['class' => 'navbar-nav navbar-right'];
     $nav['items'] = [
         ['label' => 'Загрузка фото', 'url' => ['/uploadphoto/index']],
+        ['label' => 'Заказы', 'url' => ['/show-orders/index'], 'visible' => !\Yii::$app->user->isGuest],
         ['label' => 'Домой', 'url' => ['/site/index']],
         ['label' => 'О нас', 'url' => ['/site/about']],
-        ['label' => 'Форма', 'url' => ['/activity/create']],
+//        ['label' => 'Форма', 'url' => ['/activity/create']],
         Yii::$app->user->isGuest ? ([
             'label' => 'Войти',
             'url' => ['/auth/sign-in']

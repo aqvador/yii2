@@ -1,1 +1,0 @@
-<?phpnamespace app\components;use phpDocumentor\Reflection\Types\Boolean;use yii\base\Component;class ActivityComponent extends Component {    public function cleateActivity(Avtivity &$model): Boolean {        if ($model->validate()) {        }        return false;    }}

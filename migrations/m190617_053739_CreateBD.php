@@ -50,10 +50,10 @@ class m190617_053739_CreateBD extends Migration {
         ]);
 
         $user = [
-            ['email' => 'admin@test.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Анатолий'],
-            ['email' => 'user@test.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Анатолий'],
-            ['email' => 'as@alltel24.ru', 'password' => '111111', 'rule' => 'user', 'name' => 'Александр'],
-            ['email' => 'as@pic66.ru', 'password' => '111111', 'rule' => 'admin', 'name' => 'Александр'],
+            ['email' => 'admin@test.ru', 'password' => '123456', 'rule' => 'admin', 'name' => 'Анатолий'],
+            ['email' => 'user@test.ru', 'password' => '123456', 'rule' => 'user', 'name' => 'Анатолий'],
+            ['email' => 'as@alltel24.ru', 'password' => '123456', 'rule' => 'user', 'name' => 'Александр'],
+            ['email' => 'as@pic66.ru', 'password' => '123456', 'rule' => 'admin', 'name' => 'Александр'],
         ];
         foreach ($user as $k => $v) {
             $this->insert('users', [

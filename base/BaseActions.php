@@ -12,12 +12,5 @@ class BaseActions extends Action {
 
     public function run() {
         \Yii::$app->getView()->params['title'] = $this->title;
-        if (!\Yii::$app->user->isGuest) {
-
-            if (!\Yii::$app->rbac->canCreateOrder) {
-                throw new HttpException(403, 'Сюда нельзя тебе');
-            }
-            return $this->controller->goHome();
-        }
     }
 }

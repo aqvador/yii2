@@ -25,6 +25,7 @@ $config = [
             'cookieValidationKey' => 'EZGhHfbOf9W08K9fqwJ2yA6Jnyv9KFR1',
         ],
         'activity' => ['class' => \app\components\ActivityComponent::class],
+//        'showOrders' => ['class' => \]
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -33,7 +34,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => \app\models\auth\Users::class,
-            //            'enableAutoLogin' => true,
+            'enableAutoLogin' => true,
         ],
         'auth' => [
             'class' => \app\components\AuthComponent::class

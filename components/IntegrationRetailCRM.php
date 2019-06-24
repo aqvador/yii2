@@ -28,7 +28,7 @@ class IntegrationRetailCRM extends Component {
     public function CreateOrderCRM($model) {
         /** @var $model \app\models\uploadphoto\OrderPhoto */
         $this->RetailCRM = new ApiClient($this->linkCrm, $this->token, ApiClient::V5);
-        $clientIdCrm = $this->searchClientIdCrm($model->email);
+        $model->clientIdCrm = $this->searchClientIdCrm($model->email);
         $orderInfo = [
             'firstName' => $model->name,
             'phone' => $model->phone,
@@ -37,8 +37,8 @@ class IntegrationRetailCRM extends Component {
             'customerComment' => $model->comment,
             'managerComment' => 'Папка заказа: ' . \Yii::$app->session->get('folder')
         ];
-        if ($clientIdCrm)
-            $orderInfo['customer'] = ['id' => $clientIdCrm];
+        if ($model->clientIdCrm)
+            $orderInfo['customer'] = ['id' => $model->clientIdCrm];
         //        return $model->realPrice;
         foreach ($model->realPrice as $k => $v) {
             foreach ($v as $key => $item) {
@@ -59,7 +59,7 @@ class IntegrationRetailCRM extends Component {
 
         if ($response->isSuccessful() && 201 === $response->getStatusCode()) {
             $model->orderNumCRM = $response->id;
-            $model->clientIdCrm = $clientIdCrm;
+            $model->status = 'open';
             return ['status' => 'ok', 'id' => $response->id];
         }
 
