@@ -37,7 +37,7 @@ class RbacController extends Controller {
         $authManager->addChild($objRole['user'], $viewYourOrders);
         $authManager->addChild($objRole['user'], $createOrder);
 
-        $authManager->addChild($objRole['admin'], $user);
+        $authManager->addChild($objRole['admin'], $objRole['user']);
         $authManager->addChild($objRole['admin'], $allpreveleges);
         echo "\nВсе права наполнены\n";
     }
