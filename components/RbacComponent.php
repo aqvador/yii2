@@ -49,8 +49,6 @@ class RbacComponent extends Component {
         $authManager->addChild($admin, $allpreveleges);
 
 
-
-
     }
 
 }

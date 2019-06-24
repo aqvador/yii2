@@ -11,15 +11,15 @@ class RbacController extends Controller {
         $authManager->removeAll();
         $roles = ['admin' => 1, 'manager' => 1, 'user' => 1];
         foreach ($roles as $k => $role) {
-            $$k = $authManager->createRole($k);
-            $authManager->add($$k);
+            $objRole[$k] = $authManager->createRole($k);
+            $authManager->add($objRole[$k]);
         }
 
-        $createOrder = $authManager->createPermission('createOrder');
+   $createOrder = $authManager->createPermission('createOrder');
         $createOrder->description = 'Сделать заказ';
         $authManager->add($createOrder);
 
-        $viewYourOrders = $authManager->createPermission('uploadphoto');
+        $viewYourOrders = $authManager->createPermission('viewYourOrders');
         $viewYourOrders->description = 'Просмотр своих заказов';
         $authManager->add($viewYourOrders);
 
@@ -34,17 +34,12 @@ class RbacController extends Controller {
         /** @var  $user */ /** @var  $manager */
         /** @var   $admin */
 
-        $authManager->addChild($user, $viewYourOrders);
-        $authManager->addChild($user, $createOrder);
+        $authManager->addChild($objRole['user'], $viewYourOrders);
+        $authManager->addChild($objRole['user'], $createOrder);
 
-        $authManager->addChild($admin, $user);
-        $authManager->addChild($admin, $allpreveleges);
-        echo "\nВсе права наполнены
-        \n";
-    }
-
-    public function canCreateOrder(){
-        return \Yii::$app->user->can('uploadphoto');
+        $authManager->addChild($objRole['admin'], $user);
+        $authManager->addChild($objRole['admin'], $allpreveleges);
+        echo "\nВсе права наполнены\n";
     }
 }
 

@@ -11,24 +11,18 @@ namespace app\models\uploadphoto;
 
 use app\components\OrderPhotoComponent;
 use app\components\validation\ValidationOrderPhoto;
+use app\models\OrdersBase;
 use yii\base\Model;
 
-class OrderPhoto extends Model {
+class OrderPhoto extends OrdersBase {
 
-    public $name;
-    public $email;
-    public $phone;
-    public $comment;
     public $order;
     public $realPrice;
     public $Answer;
-    public $totalPrice;
-    public $orderNumCRM;
-    public $clientIdCrm;
 
 
     public function rules() {
-        return [
+        return array_merge([
             [
                 ['name', 'email', 'phone', 'order'],
                 'required'
@@ -40,7 +34,7 @@ class OrderPhoto extends Model {
             [
                 'phone',
                 'match',
-                'pattern' => '/^\+7\s\([0-9]{3}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/',
+                'pattern' => '/^\+7\s\([3489]{1}[0-9]{2}\)\s[0-9]{3}\-[0-9]{2}\-[0-9]{2}$/',
             ],
             [
                 'comment',
@@ -58,7 +52,7 @@ class OrderPhoto extends Model {
                 }
             ],
 
-        ];
+        ], parent::rules());
     }
 
     public function attributeLabels() {
@@ -76,7 +70,8 @@ class OrderPhoto extends Model {
      * @throws \yii\db\Exception
      */
     public function saveOrder() {
-        return \Yii::createObject(OrderPhotoComponent::class)->pushSaveOrder($this);
+               $this->client_id = \Yii::$app->user->id;
+               return $this->save(false);
     }
 
 }

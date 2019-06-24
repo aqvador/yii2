@@ -2,6 +2,7 @@
 
 namespace app\models\auth;
 
+use app\models\Orders;
 use yii\web\IdentityInterface;
 
 /**
@@ -137,5 +138,9 @@ class Users extends UsersBase implements IdentityInterface {
      */
     public function validateAuthKey($authKey):bool {
        return $this->authKey==$authKey;
+    }
+
+    public function getOrders(){
+        return $this->hasMany(Orders::class, ['client_id    ' => 'id']);
     }
 }

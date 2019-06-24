@@ -33,30 +33,4 @@ class OrderPhotoComponent extends Component {
         }
     }
 
-    /**
-     * @param $model
-     * @return int
-     * @throws Exception
-     */
-    public function pushSaveOrder($model) {
-        /** @var  $model \app\models\uploadphoto\OrderPhoto */
-        $query = new Query();
-        $client_id = (isset(\Yii::$app->session->get('user')['clientId'])) ? \Yii::$app->session->get('user')['clientId'] : 'guest_' . $model->name . '_' . date('Y-m-d H:i:s');
-
-
-        return $query->createCommand()->insert('orders', [
-            'client_id' => $client_id,
-            'name' => $model->name,
-            'orderNumCRM' => $model->orderNumCRM,
-            'clientIdCrm' => $model->clientIdCrm,
-            'email' => $model->email,
-            'phone' =>$model->phone,
-            'comment' => $model->comment,
-            'status' => 'open',
-            'totalPrice' => $model->totalPrice
-        ])->execute();
-
-
-    }
-
 }
