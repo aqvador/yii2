@@ -18,26 +18,24 @@ $config = [
     ],
     'components' => [
         'authManager' => [
-            'class' => \yii\rbac\DbManager::class
+            'class' => '\yii\rbac\DbManager'
         ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'EZGhHfbOf9W08K9fqwJ2yA6Jnyv9KFR1',
         ],
-        'activity' => ['class' => \app\components\ActivityComponent::class],
-//        'showOrders' => ['class' => \]
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'rbac' => [
-            'class' => \app\components\RbacComponent::class
+            'class' => '\app\components\RbacComponent'
         ],
         'user' => [
-            'identityClass' => \app\models\auth\Users::class,
+            'identityClass' => '\app\models\auth\Users',
             'enableAutoLogin' => true,
         ],
         'auth' => [
-            'class' => \app\components\AuthComponent::class
+            'class' => '\app\components\AuthComponent'
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -66,7 +64,9 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [],
+            'rules' => [
+                 '/' => 'uploadphoto/index',
+            ],
         ],
 
     ],
