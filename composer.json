@@ -14,12 +14,13 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=7.0.0",
         "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-jui": "~2.0.0",
-        "retailcrm/api-client-php": "~5.0"
+        "retailcrm/api-client-php": "~5.0",
+        "imagine/imagine": "~0.7.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

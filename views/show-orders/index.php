@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 //            'id',
                 //            'client_id',
-                'name',
+//                'name',
                 'orderNumCRM',
                 //            'clientIdCrm',
                 //'email:email',

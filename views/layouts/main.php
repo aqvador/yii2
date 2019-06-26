@@ -22,7 +22,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <?php $this->registerCsrfMetaTags() ?>
-	<title><?= Html::encode((isset($this->params['title']))?$this->params['title']:'Задайте title странице') ?></title>
+	<title><?= Html::encode((isset($this->params['title'])) ? $this->params['title'] : 'Задайте title странице') ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -34,19 +34,25 @@ AppAsset::register($this);
     NavBar::begin([
         'brandLabel' => 'Brand',
         'brandUrl' => Yii::$app->homeUrl,
+        //        'brandImage' => '@web/logo.png',
         'options' => ['class' => 'navbar-inverse navbar-fixed-top',],
     ]);
     $nav['options'] = ['class' => 'navbar-nav navbar-right'];
     $nav['items'] = [
         ['label' => 'Загрузка фото', 'url' => ['/uploadphoto/index']],
-        ['label' => 'Заказы', 'url' => ['/show-orders/index'], 'visible' => (Yii::$app->user->isGuest) ? true : false],
-//        ['label' => 'Форма', 'url' => ['/activity/create']],
+        ['label' => 'Заказы', 'url' => ['/show-orders/index'], 'visible' => !Yii::$app->user->isGuest],
         Yii::$app->user->isGuest ? ([
             'label' => 'Войти',
             'url' => ['/auth/sign-in']
-        ]) : ('<li>' . Html::beginForm(['/auth/log-out'], 'post') . Html::submitButton('Выйти (' . Yii::$app->user->identity->name . ')', ['class' => 'btn btn-link logout']) . Html::endForm() . '</li>')
+        ]) : ([
+            'label' => 'Выйти (' . Yii::$app->user->identity->name . ')',
+            'url' => ['/auth/log-out']
+        ]),
+        Yii::$app->user->isGuest ? ([
+            'label' => 'Регистрация',
+            'url' => ['/auth/sign-up']
+        ]) : ''
     ];
-    #Если есть последняя посещенная страница упользователя, то добавим ее в конец меню
     echo Nav::widget($nav);
     NavBar::end();
     ?>

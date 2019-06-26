@@ -20,24 +20,26 @@ use \yii\bootstrap\Html;
 				<!--							id="order_num"></span></h3>-->
                 <h3 style="color: #0086c0;">К оплате: <span style="color: #d7582d;"
 															id="order_price"></span></h3>
-                <div id="extended_products"
-					 onclick="jQuery('#recomended_products').modal();"></div>
-                <?php $form = ActiveForm::begin([
-                    'id' => 'OrderFormPhoto',
-                ]) ?>
+                <?php $form = ActiveForm::begin(['id' => 'OrderFormPhoto']) ?>
+
                 <?= $form->field($model, 'name')->textInput()->label('Имя'); ?>
+
                 <?= $form->field($model, 'email')->widget(\yii\widgets\MaskedInput::class, [
                     'name' => 'input-36',
                     'clientOptions' => [
                         'alias' => 'email'
                     ]
                 ])->textInput(['placeholder' => 'name@exemple.ru'])->label('Ваш email') ?>
+
                 <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::class, ['mask' => '+7 (999) 999-99-99'])->textInput(['placeholder' => '+7 (999) 999-99-99'])->label('Ваш телефон'); ?>
+
                 <?= $form->field($model, 'comment')->textarea()->label('Комментарий') ?>
+
                 <?= Html::submitInput('Подтвердить заказ'); ?>
+
                 <?php $form = ActiveForm::end() ?>
-				<input class="cancel_order" onclick="hideOrderForm();" type="button"
-					   value="Назад">
+
+				<input class="cancel_order" onclick="hideOrderForm();" type="button" value="Назад">
             </div>
             <div id="photoprint_form">
                 <div id="sizes">
