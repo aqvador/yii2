@@ -30,9 +30,9 @@ $config = [
             ],
         ],
         'cache' => [
-            //            'class' => 'yii\caching\FileCache',
-            'class' => 'yii\caching\MemCache',
-            'useMemcached' => true
+//                        'class' => 'yii\caching\FileCache',
+//            'class' => 'yii\caching\MemCache',
+//            'useMemcached' => true
         ],
 
         'log' => [

@@ -14,7 +14,7 @@ use yii\widgets\Breadcrumbs;
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
-	<!DOCTYPE html>
+<!DOCTYPE html>
 	<html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
@@ -32,7 +32,7 @@ AppAsset::register($this);
 
     <?php
     NavBar::begin([
-        'brandLabel' => 'Brand',
+        'brandLabel' => 'pic66',
         'brandUrl' => Yii::$app->homeUrl,
         //        'brandImage' => '@web/logo.png',
         'options' => ['class' => 'navbar-inverse navbar-fixed-top',],
@@ -63,17 +63,24 @@ AppAsset::register($this);
 
         <?= $content ?>
     </div>
+
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Brand <?= date('Y') ?></p>
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-
-</footer>
+<?= $this->render('footer') ?>
+<!--<footer class="footer">-->
+<!--    <div class="container">-->
+<!--		<p class="pull-left">&copy; pic66.ru --><? //= date('Y')?><!--</p>-->
+<!--		--><? //=Html::mailto('da@pic66.ru', 'da@pic66.ru')?>
+<!--        <p class="pull-right">--><? //=Html::a('(343) 300 45 66', 'tel:+73433004566')?><!--</p>-->
+<!--    </div>-->
+<!---->
+<!--</footer>-->
 
 <?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
+
+
+
+
