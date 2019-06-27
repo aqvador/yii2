@@ -28,7 +28,13 @@ class OrderPhotoComponent extends Component {
         $query = new Query();
 
         try {
-            return $query->select(['*'])->from('PhotoSize')->andWhere(['active' => 1])->orderBy(['position' => 4])->createCommand()->queryAll();
+            return $query->select(['*'])
+                ->from('PhotoSize')
+                ->andWhere(['active' => 1])
+                ->orderBy(['position' => 4])
+                ->createCommand()
+                ->cache(3600 * 24)
+                ->queryAll();
         } catch (Exception $e) {
         }
     }

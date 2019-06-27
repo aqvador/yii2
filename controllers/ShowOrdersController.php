@@ -6,6 +6,7 @@ use Yii;
 use app\models\OrdersBase;
 use app\models\ShowOrders;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -32,6 +33,12 @@ class ShowOrdersController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
+        if(\Yii::$app->user->isGuest) {
+           throw new HttpException(405, 'Гостям вход не разрешен!');
+        }
+//        if(!\Yii::$app->user->can('admin')) {
+//             throw new HttpException(404, 'Кто тут админ?');
+//        }
         $searchModel = new ShowOrders();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

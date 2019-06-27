@@ -29,6 +29,7 @@ class IntegrationRetailCRM extends Component {
         /** @var $model \app\models\uploadphoto\OrderPhoto */
         $this->RetailCRM = new ApiClient($this->linkCrm, $this->token, ApiClient::V5);
         $model->clientIdCrm = $this->searchClientIdCrm($model->email);
+        $model->client_id = ($model->client_id) ? $model->client_id : 'Guest_'.$model->name;
         $orderInfo = [
             'firstName' => $model->name,
             'phone' => $model->phone,
