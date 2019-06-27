@@ -29,11 +29,13 @@ class OrderPhotoAction extends BaseActions {
         $model = new OrderPhoto();
 
         if (\Yii::$app->request->isPost) {
+             $model->client_id = (\Yii::$app->user->isGuest) ? 'Guest_' . $model->name : $model->client_id;
             $model->load(\Yii::$app->request->post());
         }
 
 
         if (\Yii::$app->request->isAjax) {
+
             \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
             if ($model->validate()) {
 

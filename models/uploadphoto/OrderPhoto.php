@@ -70,7 +70,6 @@ class OrderPhoto extends OrdersBase {
      * @throws \yii\db\Exception
      */
     public function saveOrder() {
-               $this->client_id = \Yii::$app->user->id;
                return $this->save(false);
     }
 

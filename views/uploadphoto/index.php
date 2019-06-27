@@ -84,4 +84,4 @@ use \yii\bootstrap\Html;
 $this->registerJsFile('@web/js/mod_iz_photoprint.js', ['depends' => [yii\web\YiiAsset::class]]);
 $this->registerJsFile('@web/js/dmuploader.min.js', ['depends' => [yii\web\YiiAsset::class]]);
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', ['depends' => [yii\web\YiiAsset::class]]);
-$this->registerJsVar('stock_price', \Yii::$app->cache->get('paramPrice'));
+$this->registerJsVar('stock_price', $param);
