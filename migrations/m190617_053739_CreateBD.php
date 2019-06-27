@@ -66,16 +66,16 @@ class m190617_053739_CreateBD extends Migration {
             Yii::$app->authManager->assign($userRole, ++$k);
         }
         $insertStr = [
-            ['size' => '9x13', 'price' => '10', 'active' => 1, 'position' => 1, 'chosen' => 0],
-            ['size' => '10x15', 'price' => '15', 'active' => 1, 'position' => 2, 'chosen' => 1],
-            ['size' => '11x15', 'price' => '15', 'active' => 1, 'position' => 3, 'chosen' => 0],
-            ['size' => '13x18', 'price' => '17', 'active' => 1, 'position' => 4, 'chosen' => 0],
-            ['size' => '15x15', 'price' => '20', 'active' => 1, 'position' => 5, 'chosen' => 0],
-            ['size' => '15x20', 'price' => '20', 'active' => 1, 'position' => 6, 'chosen' => 0],
-            ['size' => '20x30', 'price' => '30', 'active' => 1, 'position' => 7, 'chosen' => 0],
-            ['size' => '21x30', 'price' => '30', 'active' => 1, 'position' => 8, 'chosen' => 0],
-            ['size' => '20x40', 'price' => '60', 'active' => 1, 'position' => 9, 'chosen' => 0],
-            ['size' => '30x42', 'price' => '75', 'active' => 1, 'position' => 10, 'chosen' => 0]
+            ['size' => '7x7', 'price' => '12', 'active' => 1, 'position' => 1, 'chosen' => 0],
+            ['size' => '7x10', 'price' => '12', 'active' => 1, 'position' => 2, 'chosen' => 0],
+            ['size' => '9x13', 'price' => '12', 'active' => 1, 'position' => 3, 'chosen' => 0],
+            ['size' => '10x15', 'price' => '5', 'active' => 1, 'position' => 4, 'chosen' => 1],
+            ['size' => '13x18', 'price' => '15', 'active' => 1, 'position' => 5, 'chosen' => 0],
+            ['size' => '15x15', 'price' => '18', 'active' => 1, 'position' => 6, 'chosen' => 0],
+            ['size' => '15x21', 'price' => '15', 'active' => 1, 'position' => 7, 'chosen' => 0],
+            ['size' => '21x30', 'price' => '25', 'active' => 1, 'position' => 8, 'chosen' => 0],
+            ['size' => '20x40', 'price' => '68', 'active' => 1, 'position' => 9, 'chosen' => 0],
+            ['size' => '30x42', 'price' => '60', 'active' => 1, 'position' => 10, 'chosen' => 0]
         ];
         foreach ($insertStr as $v) {
             $this->insert('PhotoSize', [
@@ -96,9 +96,16 @@ class m190617_053739_CreateBD extends Migration {
     public function safeDown() {
         //        echo "m190617_053739_CreateBD cannot be reverted.\n";
 
-        $this->dropTable('PhotoSize');
+        $this->dropTable('auth_assignment');
+        $this->dropTable('auth_item_child');
+        $this->dropTable('auth_item');
+        $this->dropTable('auth_rule');
+//        $this->dropTable('migration');
         $this->dropTable('orders');
+        $this->dropTable('PhotoSize');
         $this->dropTable('users');
+        $this->truncateTable('migration');
+
 
         //        return false;
     }
