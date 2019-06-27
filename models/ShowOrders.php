@@ -40,7 +40,7 @@ class ShowOrders extends OrdersBase
      */
     public function search($params)
     {
-        $query = OrdersBase::find()->andWhere(['client_id' => \Yii::$app->user->id]);
+        $query = OrdersBase::find()->andWhere(['client_id' => \Yii::$app->user->id])->cache(3600*24);
 
         // add conditions that should always apply here
 

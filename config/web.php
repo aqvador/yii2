@@ -25,7 +25,9 @@ $config = [
             'cookieValidationKey' => 'EZGhHfbOf9W08K9fqwJ2yA6Jnyv9KFR1',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            //            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\MemCache',
+            'useMemcached' => true
         ],
         'rbac' => [
             'class' => '\app\components\RbacComponent'
@@ -52,7 +54,6 @@ $config = [
                 'encryption' => 'tls'
             ],
         ],
-        'mail' => 'noreply@pic66.ru',
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -86,14 +87,14 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        'allowedIPs' => ['127.0.0.1'],
+        'allowedIPs' => ['*'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        'allowedIPs' => ['127.0.0.1'],
+        'allowedIPs' => ['*'],
     ];
 }
 

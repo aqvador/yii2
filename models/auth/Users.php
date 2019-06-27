@@ -3,6 +3,7 @@
 namespace app\models\auth;
 
 use app\models\Orders;
+use yii\caching\TagDependency;
 use yii\web\IdentityInterface;
 
 /**
@@ -83,7 +84,12 @@ class Users extends UsersBase implements IdentityInterface {
      * or the identity is not in an active state (disabled, deleted, etc.)
      */
     public static function findIdentity($id) {
-       return Users::find()->andWhere(['id'=> $id])->one();
+        /** Сброс тега . бывает не работает. надо Юзать редис */
+        //TagDependency::invalidate(\Yii::$app->cache, \Yii::$app->user->id);
+       return Users::find()
+           ->andWhere(['id'=> $id])
+           ->cache(3600*24, new TagDependency(['tags' => \Yii::$app->user->id]))
+           ->one();
     }
 
     /**

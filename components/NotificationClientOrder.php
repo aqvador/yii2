@@ -14,7 +14,7 @@ class NotificationClientOrder extends Component {
         $mail = \Yii::$app->mailer->compose('notification', compact('model'))
                     ->setTo($model->email)
                     ->setFrom(['noreply@pic66.ru' => 'Pic66.ru'])
-                    ->setSubject('Pic66 Ваш заказ номер: ' . $model->orderNumCRM)
+                    ->setSubject('Pic66 заказ номер: ' . $model->orderNumCRM)
                     ->send();
         // тут будет лог;
         return $mail;

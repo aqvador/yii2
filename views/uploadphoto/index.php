@@ -4,11 +4,16 @@
  * @var $size \app\controllers\UploadphotoController
  */
 
+/** @var $this \yii\web\View */
+
 use \yii\bootstrap\ActiveForm;
 use \yii\bootstrap\Html;
 
-
 ?>
+<?php
+//\Yii::$app->cache->flush();
+/** А че, закешируем всю страницу. тут нет параметров которые  часть меняются =) */
+if ($this->beginCache('pageUploadPhoto', ['duration' => 3600*12])) : ?>
 	<div class="content">
         <div class="moduletable ">
             <h3 id="photoprint_order" data-mid="116" onclick="showPhotoprintForm();"
@@ -73,9 +78,10 @@ use \yii\bootstrap\Html;
             <?= $this->render('modal-content'); ?>
         </div>
     </div>
-
-<?php
+    <?php
+    $this->endCache();
+	endif;
 $this->registerJsFile('@web/js/mod_iz_photoprint.js', ['depends' => [yii\web\YiiAsset::class]]);
 $this->registerJsFile('@web/js/dmuploader.min.js', ['depends' => [yii\web\YiiAsset::class]]);
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js', ['depends' => [yii\web\YiiAsset::class]]);
-$this->registerJsVar('stock_price', $param);
+$this->registerJsVar('stock_price', \Yii::$app->cache->get('paramPrice'));
