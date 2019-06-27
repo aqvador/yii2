@@ -29,12 +29,6 @@ $config = [
                 'encryption' => 'tls'
             ],
         ],
-        'cache' => [
-//                        'class' => 'yii\caching\FileCache',
-//            'class' => 'yii\caching\MemCache',
-//            'useMemcached' => true
-        ],
-
         'log' => [
             'targets' => [
                 [

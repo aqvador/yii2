@@ -11,6 +11,7 @@ namespace app\controllers\uploadphoto;
 
 use app\components\IntegrationRetailCRM;
 use app\base\BaseActions;
+use app\components\NotificationClientOrder;
 use app\models\uploadphoto\OrderPhoto;
 
 class OrderPhotoAction extends BaseActions {
@@ -37,8 +38,9 @@ class OrderPhotoAction extends BaseActions {
             if ($model->validate()) {
 
                 $crm = \Yii::createObject(IntegrationRetailCRM::class);
-                $a = $crm->CreateOrderCRM($model);
+               $a = $crm->CreateOrderCRM($model);
                 $model->saveOrder();
+                \Yii::createObject(NotificationClientOrder::class)->sendNotification($model);
                 return $a;
             } else {
                 return $model->errors;

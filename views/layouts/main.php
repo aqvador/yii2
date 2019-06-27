@@ -67,14 +67,6 @@ AppAsset::register($this);
 </div>
 
 <?= $this->render('footer') ?>
-<!--<footer class="footer">-->
-<!--    <div class="container">-->
-<!--		<p class="pull-left">&copy; pic66.ru --><? //= date('Y')?><!--</p>-->
-<!--		--><? //=Html::mailto('da@pic66.ru', 'da@pic66.ru')?>
-<!--        <p class="pull-right">--><? //=Html::a('(343) 300 45 66', 'tel:+73433004566')?><!--</p>-->
-<!--    </div>-->
-<!---->
-<!--</footer>-->
 
 <?php $this->endBody() ?>
 </body>
