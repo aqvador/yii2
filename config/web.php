@@ -48,8 +48,8 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.yandex.ru',
-                'username' => 'noreply@pic66.ru',
-                'password' => 'M6K-CLm-imn-BX7',
+                'username' => 'ПОЧТА',
+                'password' => 'ПАРОЛЬ',
                 'port' => 587,
                 'encryption' => 'tls'
             ],
